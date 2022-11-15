@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ThMod</groupId>
-  <artifactId>ThMod</artifactId>
-  <version>v0.15.0</version>
+  <groupId>ReiujiMod</groupId>
+  <artifactId>ReiujiMod</artifactId>
+  <version>v0.1.0</version>
   <packaging>jar</packaging>
 
 
@@ -11,7 +11,7 @@
     <dependency>
       <groupId>com.megacrit.cardcrawl</groupId>
       <artifactId>slaythespire</artifactId>
-      <version>906</version>
+      <version>114</version>
       <scope>system</scope>
       <systemPath>${basedir}/../lib/desktop-1.0.jar</systemPath>
     </dependency>
@@ -52,12 +52,12 @@
             <phase>package</phase>
             <configuration>
               <target>
-                <copy file="target/TS05_Marisa.jar"
-                  tofile="../lib/TS05_Marisa.jar"/>
-                <copy file="target/TS05_Marisa.jar"
-                  tofile="E:/SteamLibrary/SteamApps/common/SlayTheSpire/mods/TS05_Marisa.jar"/>
-                  <copy file="target/TS05_Marisa.jar"
-                  tofile="E:/SteamLibrary/SteamApps/common/SlayTheSpire/MarisaMod/content/TS05_Marisa.jar"/>
+<!--                <copy file="target/TS05_Marisa.jar"-->
+<!--                  tofile="../lib/TS05_Marisa.jar"/>-->
+<!--                <copy file="target/TS05_Marisa.jar"-->
+<!--                  tofile="E:/SteamLibrary/SteamApps/common/SlayTheSpire/mods/TS05_Marisa.jar"/>-->
+<!--                  <copy file="target/TS05_Marisa.jar"-->
+<!--                  tofile="E:/SteamLibrary/SteamApps/common/SlayTheSpire/MarisaMod/content/TS05_Marisa.jar"/>-->
               </target>
             </configuration>
             <goals>
@@ -68,6 +68,6 @@
       </plugin>
     </plugins>
   </build>
-  <name>SL the Spire Touhou Mod By Flynn , Hell , Hohner_257 , Samsara</name>
-  <description>A Mod of the poor blonde hair girl from Touhou Project(</description>
+  <name>STS Reiuji Utsuho Mod By AntiLeaf</name>
+  <description>A Mod of Reiuji Utsuho from Touhou Project(</description>
 </project>
