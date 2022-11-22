@@ -17,6 +17,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+@Deprecated
 public class CirnoDiscoveryAction extends AbstractGameAction {
 	private boolean retrieveCard = false;
 	private boolean returnColorless = false;

@@ -1,7 +1,7 @@
 package ReiujiMod;
 
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.cards.Reiuji.ControlRod;
+import ReiujiMod.cards.Reiuji.InstantCharge;
 import ReiujiMod.cards.Reiuji.Defend_Reiuji;
 import ReiujiMod.cards.Reiuji.Strike_Reiuji;
 import ReiujiMod.characters.Reiuji;
@@ -13,9 +13,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
@@ -27,6 +29,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -155,25 +158,25 @@ public class ReiujiMod implements PostExhaustSubscriber,
 		return card;
 	}
 
-	public static void comboCheck(AbstractReiujiCard cardPlayed) {
-		ArrayList<AbstractReiujiCard> cardsToExhaust = new ArrayList<>();
-
-		for (AbstractCard c : AbstractDungeon.player.hand.group)
-			if (c != cardPlayed && c instanceof AbstractReiujiCard) {
-				AbstractReiujiCard card = (AbstractReiujiCard) c;
-
-				if (card.isCombo) {
-					if (!card.comboCheck())
-						cardsToExhaust.add(card);
-					else
-						card.updateComboCnt();
-				}
-			}
-
-		for (AbstractReiujiCard card : cardsToExhaust)
-			AbstractDungeon.actionManager.addToBottom(
-					new ExhaustSpecificCardAction(card, AbstractDungeon.player.hand));
-	}
+//	public static void comboCheck(AbstractReiujiCard cardPlayed) {
+//		ArrayList<AbstractReiujiCard> cardsToExhaust = new ArrayList<>();
+//
+//		for (AbstractCard c : AbstractDungeon.player.hand.group)
+//			if (c != cardPlayed && c instanceof AbstractReiujiCard) {
+//				AbstractReiujiCard card = (AbstractReiujiCard) c;
+//
+//				if (card.isCombo) {
+//					if (!card.comboCheck())
+//						cardsToExhaust.add(card);
+//					else
+//						card.updateComboCnt();
+//				}
+//			}
+//
+//		for (AbstractReiujiCard card : cardsToExhaust)
+//			AbstractDungeon.actionManager.addToBottom(
+//					new ExhaustSpecificCardAction(card, AbstractDungeon.player.hand));
+//	}
 	
 	public void receiveEditCharacters() {
 		logger.info("begin editing characters");
@@ -214,6 +217,8 @@ public class ReiujiMod implements PostExhaustSubscriber,
 		
 		logger.info("done editing cards");
 	}
+
+	public static CardGroup echoGroup;
 	
 	// 必须有这个函数才能初始化
 	public static void initialize() {
@@ -243,8 +248,8 @@ public class ReiujiMod implements PostExhaustSubscriber,
 						new ApplyPowerAction(p, p, new HasUsedSpellPower(card)));
 			}
 
-			if (card.isCombo)
-				ReiujiMod.comboCheck(card);
+//			if (card.isCombo)
+//				ReiujiMod.comboCheck(card);
 		}
 	}
 	
@@ -271,6 +276,16 @@ public class ReiujiMod implements PostExhaustSubscriber,
 	
 	public int receiveOnPlayerLoseBlock(int amount) {
 		return amount;
+	}
+
+	public static void addActionsToTop(AbstractGameAction... actions) {
+		ArrayList<AbstractGameAction> temp = new ArrayList<>();
+
+		for (AbstractGameAction act : actions)
+			temp.add(0, act);
+
+		for (AbstractGameAction act : temp)
+			AbstractDungeon.actionManager.addToTop(act);
 	}
 	
 	private static String loadJson(String jsonPath) {
@@ -365,7 +380,7 @@ public class ReiujiMod implements PostExhaustSubscriber,
 		cardsToAdd.add(new Strike_Reiuji());
 		cardsToAdd.add(new Defend_Reiuji());
 
-		cardsToAdd.add(new ControlRod());
+		cardsToAdd.add(new InstantCharge());
 	}
 	
 	

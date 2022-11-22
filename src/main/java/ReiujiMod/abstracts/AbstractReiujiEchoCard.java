@@ -1,33 +1,28 @@
 package ReiujiMod.abstracts;
 
-import ReiujiMod.ReiujiMod;
 import ReiujiMod.powers.HasUsedSpellPower;
 import basemod.abstracts.CustomCard;
 import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.mod.stslib.cards.interfaces.SpawnModificationCard;
 import com.evacipated.cardcrawl.mod.stslib.patches.FlavorText;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import static ReiujiMod.ReiujiMod.CHILLED_FLAVOR;
 
-public abstract class AbstractReiujiCard extends CustomCard implements SpawnModificationCard {
-	protected static final Color CYAN_COLOR = new Color(0f, 204f / 255f, 0f, 1f);
+public abstract class AbstractReiujiEchoCard extends AbstractReiujiCard {
+	boolean used = false;
 
-	public boolean isSpellCard = false;
-	
-	public AbstractReiujiCard(
+	public AbstractReiujiEchoCard(
 			String id,
 			String name,
 			String img,
 			int cost,
 			String rawDescription,
-			AbstractCard.CardType type,
-			AbstractCard.CardColor color,
-			AbstractCard.CardRarity rarity,
-			AbstractCard.CardTarget target
+			CardType type,
+			CardColor color,
+			CardRarity rarity,
+			CardTarget target
 	) {
 		super(
 				id,
@@ -47,10 +42,9 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 	
 	@Override
 	public AbstractCard makeStatEquivalentCopy() {
-		AbstractReiujiCard card = (AbstractReiujiCard) super.makeStatEquivalentCopy();
+		AbstractReiujiEchoCard card = (AbstractReiujiEchoCard) super.makeStatEquivalentCopy();
 
-		card.isSpellCard = this.isSpellCard;
-//		card.isCombo = this.isCombo;
+		card.used = this.used;
 
 		return card;
 	}
@@ -64,11 +58,6 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 	 public boolean canPlay(AbstractCard card) {
 		if (!super.canPlay(card))
 			return false;
-
-		if (card instanceof AbstractReiujiCard &&
-				((AbstractReiujiCard) card).isSpellCard &&
-				AbstractDungeon.player.hasPower(HasUsedSpellPower.POWER_ID))
-					return false;
 
 		return true;
 	}

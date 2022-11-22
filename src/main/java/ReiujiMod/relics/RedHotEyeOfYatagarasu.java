@@ -2,21 +2,20 @@ package ReiujiMod.relics;
 
 import ReiujiMod.ReiujiMod;
 import basemod.abstracts.CustomRelic;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
-public class EyeOfYatagarasu extends CustomRelic {
-	public static final String SIMPLE_NAME = EyeOfYatagarasu.class.getSimpleName();
+public class RedHotEyeOfYatagarasu extends CustomRelic {
+	public static final String SIMPLE_NAME = RedHotEyeOfYatagarasu.class.getSimpleName();
 
 	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	private static final String IMG = "img/relics/" + SIMPLE_NAME + ".png";
 	private static final String IMG_OTL = "img/relics/outline/" + SIMPLE_NAME + ".png";
 
-	public static final int AMT = 3;
+	public static final int AMT = 4;
 
-	public EyeOfYatagarasu() {
+	public RedHotEyeOfYatagarasu() {
 		super(
 				ID,
 				ImageMaster.loadImage(IMG),
@@ -33,17 +32,7 @@ public class EyeOfYatagarasu extends CustomRelic {
 	}
 	
 	public AbstractRelic makeCopy() {
-		return new EyeOfYatagarasu();
-	}
-
-	@Override
-	public void atTurnStart() {
-		int maxHeal = (AbstractDungeon.player.maxHealth + 4) / 5;
-
-		this.counter += AMT;
-		this.counter = Integer.min(this.counter, maxHeal);
-
-		this.beginLongPulse();
+		return new RedHotEyeOfYatagarasu();
 	}
 
 	@Override
@@ -51,7 +40,7 @@ public class EyeOfYatagarasu extends CustomRelic {
 		int maxHeal = (AbstractDungeon.player.maxHealth + 4) / 5;
 
 		if (AbstractDungeon.player.energy.energy > 0) {
-			this.counter += AMT;
+			this.counter += 4;
 			this.counter = Integer.min(this.counter, maxHeal);
 
 			this.beginLongPulse();
