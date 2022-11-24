@@ -3,18 +3,18 @@ package ReiujiMod.cards.Reiuji;
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.patches.AbstractCardEnum;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.*;
+import ReiujiMod.powers.CantUseAttackPower;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.cards.status.VoidCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class NuclearRupture extends AbstractReiujiCard {
-	public static final String SIMPLE_NAME = NuclearRupture.class.getSimpleName();
+public class RocketStrike extends AbstractReiujiCard {
+	public static final String SIMPLE_NAME = RocketStrike.class.getSimpleName();
 
 	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/cards/" + ID + ".png";
@@ -23,14 +23,11 @@ public class NuclearRupture extends AbstractReiujiCard {
 	public static final String NAME = cardStrings.NAME;
 	public static final String DESCRIPTION = cardStrings.DESCRIPTION;
 
-	private static final int COST = 1;
-	private static final int DAMAGE = 4;
-	private static final int TIMES = 4;
-	private static final int DRAW = 1;
-	private static final int UPG_DRAW = 1;
-	private static final int UPG_COST = 0;
+	private static final int COST = 3;
+	private static final int DAMAGE = 30;
+	private static final int UPG_DAMAGE = 6;
 
-	public NuclearRupture() {
+	public RocketStrike() {
 		super(
 			ID,
 			NAME,
@@ -44,30 +41,25 @@ public class NuclearRupture extends AbstractReiujiCard {
 		);
 
 		this.damage = this.baseDamage = DAMAGE;
-		this.magicNumber = this.baseMagicNumber = DRAW;
-		this.draw = this.baseDraw = DRAW;
+		this.tags.add(CardTags.STRIKE);
 	}
 	
 	public void use(AbstractPlayer p, AbstractMonster m) {
-		for (int i = 0; i < TIMES; i++)
-			this.addToBot(new DamageAction(m,
-				new DamageInfo(p, this.damage, this.damageTypeForTurn),
-					AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-
-		this.addToBot(new DrawCardAction(this.magicNumber));
-		this.addToBot(new MakeTempCardInDrawPileAction(
-				new VoidCard(), 1, true, true));
+		this.addToBot(new DamageAction(m,
+				new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL)));
+		this.addToBot(new ApplyPowerAction(p, p,
+				new CantUseAttackPower()));
 	}
 	
 	@Override
 	public AbstractCard makeCopy() {
-		return new NuclearRupture();
+		return new RocketStrike();
 	}
 	
 	public void upgrade() {
 		if (!this.upgraded) {
 			this.upgradeName();
-			this.upgradeBaseCost(UPG_COST);
+			this.upgradeDamage(UPG_DAMAGE);
 			this.initializeDescription();
 		}
 	}

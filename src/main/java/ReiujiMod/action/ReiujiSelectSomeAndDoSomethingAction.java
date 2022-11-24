@@ -16,6 +16,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+@Deprecated
 public class ReiujiSelectSomeAndDoSomethingAction extends AbstractGameAction {
 	private final SelectCardsAction act;
 	private final CardGroup selected;

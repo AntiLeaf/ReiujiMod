@@ -10,10 +10,10 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ReiujiAnonymousAction extends AbstractGameAction {
+public class AnonymousAction extends AbstractGameAction {
 	ArrayList<Runnable> runnables;
 	
-	public ReiujiAnonymousAction(Runnable... runnables) {
+	public AnonymousAction(Runnable... runnables) {
 		this.actionType = ActionType.SPECIAL;
 		
 		this.runnables = new ArrayList<>();

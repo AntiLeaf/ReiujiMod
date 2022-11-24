@@ -16,13 +16,13 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
-public class ReiujiSelectSomeAndMoveAction extends AbstractGameAction {
+public class SelectSomeAndMoveAction extends AbstractGameAction {
 	private final SelectCardsAction act;
 	private final CardGroup selected, src, dest;
 	private final int amount;
 	
-	public ReiujiSelectSomeAndMoveAction(ArrayList<AbstractCard> cardList, CardGroup src, CardGroup dest,
-										 int amount, String text, Consumer<AbstractCard> work) {
+	public SelectSomeAndMoveAction(ArrayList<AbstractCard> cardList, CardGroup src, CardGroup dest,
+								   int amount, String text, Consumer<AbstractCard> work) {
 		this.src = src;
 		this.dest = dest;
 		this.amount = amount;
@@ -43,8 +43,8 @@ public class ReiujiSelectSomeAndMoveAction extends AbstractGameAction {
 		});
 	}
 	
-	public ReiujiSelectSomeAndMoveAction(ArrayList<AbstractCard> cardList, CardGroup src, CardGroup dest,
-										 int amount, String text) {
+	public SelectSomeAndMoveAction(ArrayList<AbstractCard> cardList, CardGroup src, CardGroup dest,
+								   int amount, String text) {
 		this(cardList, src, dest, amount, text, (c) -> {});
 	}
 	
