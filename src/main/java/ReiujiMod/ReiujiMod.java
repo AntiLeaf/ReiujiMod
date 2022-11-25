@@ -1,6 +1,8 @@
 package ReiujiMod;
 
 import ReiujiMod.abstracts.AbstractReiujiCard;
+import ReiujiMod.cardmodifier.StackableCardModifierManager;
+import ReiujiMod.cardmodifier.modifiers.EmbraceOfTheVoidCardModifier;
 import ReiujiMod.cards.Reiuji.InstantCharge;
 import ReiujiMod.cards.Reiuji.Defend_Reiuji;
 import ReiujiMod.cards.Reiuji.Strike_Reiuji;
@@ -277,16 +279,6 @@ public class ReiujiMod implements PostExhaustSubscriber,
 	public int receiveOnPlayerLoseBlock(int amount) {
 		return amount;
 	}
-
-	public static void addActionsToTop(AbstractGameAction... actions) {
-		ArrayList<AbstractGameAction> temp = new ArrayList<>();
-
-		for (AbstractGameAction act : actions)
-			temp.add(0, act);
-
-		for (AbstractGameAction act : temp)
-			AbstractDungeon.actionManager.addToTop(act);
-	}
 	
 	private static String loadJson(String jsonPath) {
 		return Gdx.files.internal(jsonPath).readString(String.valueOf(StandardCharsets.UTF_8));
@@ -387,6 +379,24 @@ public class ReiujiMod implements PostExhaustSubscriber,
 	static class Keywords {
 		
 		Keyword[] keywords;
+	}
+
+	public static void addActionsToTop(AbstractGameAction... actions) {
+		ArrayList<AbstractGameAction> temp = new ArrayList<>();
+
+		for (AbstractGameAction act : actions)
+			temp.add(0, act);
+
+		for (AbstractGameAction act : temp)
+			AbstractDungeon.actionManager.addToTop(act);
+	}
+
+	public static void addEmbrace(AbstractCard card, int amt) {
+		if (card instanceof AbstractReiujiCard)
+			((AbstractReiujiCard) card).addEmbrace(amt);
+		else
+			StackableCardModifierManager.addModifier(
+					card, new EmbraceOfTheVoidCardModifier(amt));
 	}
 	
 //	public static AbstractCard getRandomReiujiCard() {

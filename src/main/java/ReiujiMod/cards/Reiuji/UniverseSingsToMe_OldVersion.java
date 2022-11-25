@@ -2,20 +2,24 @@ package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.cardmodifier.modifiers.ExhaustHandAlternateCostCardModifier;
 import ReiujiMod.cards.ReiuijiDerivation.*;
 import ReiujiMod.patches.AbstractCardEnum;
-import basemod.helpers.CardModifierManager;
+import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsInHandAction;
 import com.evacipated.cardcrawl.mod.stslib.fields.cards.AbstractCard.AlwaysRetainField;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
+import com.megacrit.cardcrawl.blights.AbstractBlight;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-public class UniverseSingsToMe extends AbstractReiujiCard {
-	public static final String SIMPLE_NAME = UniverseSingsToMe.class.getSimpleName();
+@Deprecated
+public class UniverseSingsToMe_OldVersion extends AbstractReiujiCard {
+	public static final String SIMPLE_NAME = UniverseSingsToMe_OldVersion.class.getSimpleName();
 
 	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/cards/" + ID + ".png";
@@ -26,7 +30,7 @@ public class UniverseSingsToMe extends AbstractReiujiCard {
 
 	private static final int COST = 5;
 
-	public UniverseSingsToMe() {
+	public UniverseSingsToMe_OldVersion() {
 		super(
 			ID,
 			NAME,
@@ -42,13 +46,70 @@ public class UniverseSingsToMe extends AbstractReiujiCard {
 		this.isSpellCard = true;
 		this.exhaust = true;
 		AlwaysRetainField.alwaysRetain.set(this, true);
-		CardModifierManager.addModifier(this,
-				new ExhaustHandAlternateCostCardModifier());
+		this.ignoreEnergyOnUse = true;
 
 		this.cardsToPreview = new MolecularCloud();
 	}
+
+	@Override
+	public boolean hasEnoughEnergy() {
+		AbstractPlayer p = AbstractDungeon.player;
+
+		for (AbstractRelic r : p.relics)
+			if (!r.canPlay(this))
+				return false;
+
+		for (AbstractBlight b : p.blights)
+			if (!b.canPlay(this))
+				return false;
+
+		for (AbstractCard c : p.hand.group)
+			if (!c.canPlay(this))
+				return false;
+
+		if (!this.freeToPlay()) {
+			int cnt = EnergyPanel.getCurrentEnergy();
+			for (AbstractCard card : p.hand.group)
+				if (card != this)
+					cnt++;
+
+			if (cnt < this.costForTurn) {
+				this.cantUseMessage = AbstractCard.TEXT[11];
+				return false;
+			}
+			else
+				return true;
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean canUse(AbstractPlayer p, AbstractMonster m) {
+		return super.canUse(p, m);
+	}
 	
 	public void use(AbstractPlayer p, AbstractMonster m) {
+		if (!this.freeToPlay()) {
+			int used = Integer.max(this.costForTurn,
+					EnergyPanel.getCurrentEnergy());
+
+			if (used > 0)
+				EnergyPanel.useEnergy(used);
+
+			int amt = this.costForTurn - used;
+			if (amt > 0) {
+				this.addToTop(new SelectCardsInHandAction(
+						amt, "", false, false,
+						(c) -> c != this,
+						(cards) -> {
+							for (AbstractCard card : cards)
+								p.hand.moveToExhaustPile(card);
+						}
+				));
+			}
+		}
+
 		AbstractCard temp = new MolecularCloud();
 		if (this.upgraded)
 			temp.upgrade();
@@ -59,7 +120,7 @@ public class UniverseSingsToMe extends AbstractReiujiCard {
 
 	@Override
 	public AbstractCard makeCopy() {
-		return new UniverseSingsToMe();
+		return new UniverseSingsToMe_OldVersion();
 	}
 	
 	public void upgrade() {

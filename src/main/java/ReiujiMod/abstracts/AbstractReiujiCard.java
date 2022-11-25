@@ -1,6 +1,9 @@
 package ReiujiMod.abstracts;
 
 import ReiujiMod.ReiujiMod;
+import ReiujiMod.cardmodifier.StackableCardModifier;
+import ReiujiMod.cardmodifier.StackableCardModifierManager;
+import ReiujiMod.cardmodifier.modifiers.EmbraceOfTheVoidCardModifier;
 import ReiujiMod.powers.HasUsedSpellPower;
 import basemod.abstracts.CustomCard;
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +19,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import static ReiujiMod.ReiujiMod.CHILLED_FLAVOR;
 
@@ -117,6 +121,27 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 	public void triggerOnEndOfPlayerTurn() {
 		this.triggerOnLeaveHand(false, true);
 		super.triggerOnEndOfPlayerTurn();
+	}
+
+	public int getEmbrace() {
+		return StackableCardModifierManager.getStackedValue(
+				this, EmbraceOfTheVoidCardModifier.ID);
+	}
+
+	public int maxEmbrace() {
+		return this.cost - this.getEmbrace();
+	}
+
+	public void addEmbrace(int amt) {
+		amt = Integer.min(amt, this.maxEmbrace());
+
+		if (amt > 0)
+			StackableCardModifierManager.addModifier(
+					this, new EmbraceOfTheVoidCardModifier(amt));
+	}
+
+	public boolean removeEmbraceAfterPlayed() {
+		return false;
 	}
 
 	public void addActionsToTop(AbstractGameAction... actions) {

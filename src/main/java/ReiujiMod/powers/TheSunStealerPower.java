@@ -4,18 +4,18 @@ import ReiujiMod.ReiujiMod;
 import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
+import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.cards.status.VoidCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class NuclearFurnacePower extends AbstractPower {
-	public static final String SIMPLE_NAME = NuclearFurnacePower.class.getSimpleName();
+public class TheSunStealerPower extends AbstractPower {
+	public static final String SIMPLE_NAME = TheSunStealerPower.class.getSimpleName();
 
 	public static final String POWER_ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/powers/" + SIMPLE_NAME + ".png";
@@ -25,7 +25,7 @@ public class NuclearFurnacePower extends AbstractPower {
 	public static final String[] DESCRIPTIONS =
 			powerStrings.DESCRIPTIONS;
 
-	public NuclearFurnacePower(int amount) {
+	public TheSunStealerPower(int amount) {
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = AbstractDungeon.player;
@@ -37,20 +37,15 @@ public class NuclearFurnacePower extends AbstractPower {
 	}
 
 	@Override
-	public void onExhaust(AbstractCard card) {
-		boolean flag = false;
-		for (AbstractCard t : AbstractDungeon.player.masterDeck.group)
-			if (t.uuid == card.uuid) {
-				flag = true;
-				break;
-			}
+	public void onCardDraw(AbstractCard card) {
+		if (card instanceof VoidCard) {
+			for (int i = 0; i < this.amount; i++)
+				this.addToTop(new MakeTempCardInHandAction(
+						AbstractDungeon.returnTrulyRandomCardInCombat().makeCopy(), 1));
 
-		if (flag)
-			this.addToBot(new AddTemporaryHPAction(
-					this.owner, this.owner, this.amount));
-		else
-			this.addToBot(new GainBlockAction(
-					this.owner, this.owner, this.amount));
+			this.addToTop(new ExhaustSpecificCardAction(card,
+					AbstractDungeon.player.hand));
+		}
 	}
 	
 	@Override
