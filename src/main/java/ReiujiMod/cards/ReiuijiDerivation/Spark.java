@@ -41,7 +41,7 @@ public class Spark extends AbstractReiujiCard {
 			CardTarget.SELF
 		);
 
-		this.magicNumber = this.baseMagicNumber = AMT;
+		this.heat = this.baseHeat = AMT;
 		this.cantBePlayed = true;
 		this.isSupplement = true;
 	}
@@ -56,7 +56,7 @@ public class Spark extends AbstractReiujiCard {
 
 		AbstractPlayer p = AbstractDungeon.player;
 		this.addToTop(new ApplyPowerAction(p, p,
-				new HeatPower(this.magicNumber)));
+				new HeatPower(this.heat)));
 		this.addToTop(new ExhaustSpecificCardAction(this, p.hand));
 	}
 	

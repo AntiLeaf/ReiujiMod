@@ -29,6 +29,11 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 	public boolean cantBePlayed = false;
 	public boolean isSpellCard = false;
 	public boolean isSupplement = false;
+
+	public int baseHeat = 0;
+	public int baseTempHP = 0;
+	public int heat = 0;
+	public int tempHP = 0;
 	
 	public AbstractReiujiCard(
 			String id,
@@ -66,6 +71,21 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 	}
 
 	@Override
+	public void applyPowers() {
+		super.applyPowers();
+
+		this.heat = this.baseHeat;
+
+		if (AbstractDungeon.player.hasRelic("TODO")) {
+			if (this.baseHeat > 0)
+				this.heat += 1;
+
+			if (this.baseTempHP > 0)
+				this.baseTempHP += 1;
+		}
+	}
+
+	@Override
 	 public boolean canUse(AbstractPlayer p, AbstractMonster m) {
 		if (!super.canUse(p, m))
 			return false;
@@ -73,11 +93,9 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 		if (this.cantBePlayed)
 			return false;
 
-		if (this.isSpellCard &&
-				AbstractDungeon.player.hasPower(HasUsedSpellPower.POWER_ID))
-					return false;
-
-		return true;
+		return !(this.isSpellCard &&
+				p.hasPower(HasUsedSpellPower.POWER_ID) &&
+				this != ((HasUsedSpellPower) p.getPower(HasUsedSpellPower.POWER_ID)).spell);
 	}
 
 	@Override

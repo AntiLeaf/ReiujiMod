@@ -10,7 +10,7 @@ public class VoidCardPatch {
 	@SpirePatch(clz = VoidCard.class, method = "triggerWhenDrawn")
 	public static class VoidCardTriggerWhenDrawnPatch {
 		@SpirePrefixPatch
-		public static SpireReturn<Void> Insert(VoidCard c) {
+		public static SpireReturn<Void> Prefix(VoidCard c) {
 			if (AbstractDungeon.player.hasPower(TheSunStealerPower.POWER_ID))
 				return SpireReturn.Return();
 			else

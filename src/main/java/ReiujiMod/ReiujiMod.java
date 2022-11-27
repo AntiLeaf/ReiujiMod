@@ -93,14 +93,6 @@ public class ReiujiMod implements PostExhaustSubscriber,
 	private static final String KEYWORD_STRING_ZH = "localization/ReiujiMod_keywords-zh.json";
 	private static final String EVENT_PATH = "localization/ReiujiMod_events.json";
 	private static final String EVENT_PATH_ZH = "localization/ReiujiMod_events-zh.json";
-
-//	public static int typhoonCounter = 0;
-//	public static boolean isCatEventEnabled;
-//	public static boolean isDeadBranchEnabled;
-	
-//	private Properties ReiujiModModDefaultProp = new Properties();
-	
-	//public static boolean OrinEvent = false;
 	
 	private final ArrayList<AbstractCard> cardsToAdd = new ArrayList<>();
 	//private ArrayList<AbstractRelic> relicsToAdd = new ArrayList<>();
@@ -159,26 +151,6 @@ public class ReiujiMod implements PostExhaustSubscriber,
 			card.upgrade();
 		return card;
 	}
-
-//	public static void comboCheck(AbstractReiujiCard cardPlayed) {
-//		ArrayList<AbstractReiujiCard> cardsToExhaust = new ArrayList<>();
-//
-//		for (AbstractCard c : AbstractDungeon.player.hand.group)
-//			if (c != cardPlayed && c instanceof AbstractReiujiCard) {
-//				AbstractReiujiCard card = (AbstractReiujiCard) c;
-//
-//				if (card.isCombo) {
-//					if (!card.comboCheck())
-//						cardsToExhaust.add(card);
-//					else
-//						card.updateComboCnt();
-//				}
-//			}
-//
-//		for (AbstractReiujiCard card : cardsToExhaust)
-//			AbstractDungeon.actionManager.addToBottom(
-//					new ExhaustSpecificCardAction(card, AbstractDungeon.player.hand));
-//	}
 	
 	public void receiveEditCharacters() {
 		logger.info("begin editing characters");
@@ -340,25 +312,25 @@ public class ReiujiMod implements PostExhaustSubscriber,
 		}
 		
 		relicStrings = Gdx.files.internal(relic).readString(
-				String.valueOf(StandardCharsets.UTF_8)
-		);
+				String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(RelicStrings.class, relicStrings);
+
 		cardStrings = Gdx.files.internal(card).readString(
-				String.valueOf(StandardCharsets.UTF_8)
-		);
+				String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(CardStrings.class, cardStrings);
+
 		powerStrings = Gdx.files.internal(power).readString(
-				String.valueOf(StandardCharsets.UTF_8)
-		);
+				String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(PowerStrings.class, powerStrings);
+
 		potionStrings = Gdx.files.internal(potion).readString(
-				String.valueOf(StandardCharsets.UTF_8)
-		);
+				String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(PotionStrings.class, potionStrings);
+
 		eventStrings = Gdx.files.internal(event).readString(
-				String.valueOf(StandardCharsets.UTF_8)
-		);
+				String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(EventStrings.class, eventStrings);
+
 		logger.info("done editing strings");
 	}
 	

@@ -9,7 +9,11 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.status.VoidCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.GameDictionary;
+import com.megacrit.cardcrawl.localization.LocalizedStrings;
+import org.apache.commons.lang3.StringUtils;
 
 public class EmbraceOfTheVoidCardModifier extends StackableCardModifier {
 	private static final String SIMPLE_NAME = EmbraceOfTheVoidCardModifier.class.getSimpleName();
@@ -53,5 +57,11 @@ public class EmbraceOfTheVoidCardModifier extends StackableCardModifier {
 	public boolean shouldApply(AbstractCard card) {
 		return !((card instanceof AbstractReiujiCard) &&
 				((AbstractReiujiCard) card).maxEmbrace() <= 0);
+	}
+
+	public String modifyDescription(String rawDescription, AbstractCard card) {
+		return rawDescription + " NL " +
+				GameDictionary.parentWord.get("Embrace") + " " + this.amount +
+				(Settings.lineBreakViaCharacter ? " " : "") + LocalizedStrings.PERIOD;
 	}
 }

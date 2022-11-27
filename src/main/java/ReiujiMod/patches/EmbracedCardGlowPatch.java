@@ -17,7 +17,7 @@ public class EmbracedCardGlowPatch {
 	@SpirePatch(clz = AbstractCard.class, method = "triggerOnGlowCheck")
 	public static class EmbracedCardGlowPurplePatch {
 		@SpirePrefixPatch
-		public static void Insert(AbstractCard card) {
+		public static void Prefix(AbstractCard card) {
 			if (StackableCardModifierManager.hasModifier(
 					card, EmbraceOfTheVoidCardModifier.ID))
 				card.glowColor = Color.VIOLET;

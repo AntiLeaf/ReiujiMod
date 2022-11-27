@@ -1,0 +1,35 @@
+{
+  "ReiujiMod:AbsoluteField": {
+    "NAME": "绝对领域",
+    "DESCRIPTION": "将你的 暂时性生命 翻倍。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": "将你的 暂时性生命 翻倍。"
+  },
+  "ReiujiMod:AdaptiveDefense": {
+    "NAME": "自适应防御",
+    "DESCRIPTION": "将你的格挡与 暂时性生命 中较少者补至与较多者相同的数额。 NL 抽 !M! 张牌。"
+  },
+  "ReiujiMod:Defend_Reiuji": {
+    "NAME": "防御",
+    "DESCRIPTION": "获得 !B! 点格挡。"
+  },
+  "ReiujiMod:Enchant": {
+    "NAME": "附魔",
+    "DESCRIPTION": "每当你造成未被格挡的攻击伤害，将一张 #b火花 洗入抽牌堆。",
+    "UPGRADE_DESCRIPTION": "固有 。每当你造成未被格挡的攻击伤害，将一张 #b火花 洗入抽牌堆。"
+  },
+
+
+  "ReiujiMod:Spark": {
+    "NAME": "火花",
+    "DESCRIPTION": "不能被打出 。 补充 。 NL 抽到这张牌时，获得 !M! 点 热度 ，然后 消耗 。"
+  },
+
+  "Flee": {
+    "NAME": "落荒而逃",
+    "DESCRIPTION": "!M! 回合后，从当前战斗中逃跑。 虚无 。 NL 干劲 X：提前X回合逃跑。如果所需回合数不多于1，则立刻逃跑。",
+    "UPGRADE_DESCRIPTION": "固有 。!M! 回合后，从当前战斗中逃跑。 虚无 。 NL 干劲 X：提前X回合逃跑。如果所需回合数不多于1，则立刻逃跑。",
+    "EXTENDED_DESCRIPTION": [
+      "（", "回合后逃跑。）", "立刻逃跑。）", "本场战斗无法逃跑！"
+    ]
+  }
+}
