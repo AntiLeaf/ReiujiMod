@@ -26,10 +26,12 @@ public class ControlOrd extends CustomRelic {
 		);
 	}
 	
+	@Override
 	public String getUpdatedDescription() {
 		return DESCRIPTIONS[0];
 	}
 	
+	@Override
 	public AbstractRelic makeCopy() {
 		return new ControlOrd();
 	}

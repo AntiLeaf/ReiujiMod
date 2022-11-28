@@ -20,11 +20,12 @@ public abstract class StackableCardModifier extends AbstractCardModifier {
 	public StackableCardModifier() {
 	}
 
-	public void stack(AbstractCard card, int amt) {
+	public void stackAmount(AbstractCard card, int amt) {
 		amount += amt;
+		this.afterStackAmount(card, amt);
 	}
 
-	public void reduce(AbstractCard card, int amt) {
+	public void reduceAmount(AbstractCard card, int amt) {
 		amount -= amt;
 
 		if (!canGoNegative) {
@@ -34,5 +35,15 @@ public abstract class StackableCardModifier extends AbstractCardModifier {
 				CardModifierManager.removeSpecificModifier(
 						card, this, true);
 		}
+		
+		this.afterReduceAmount(card, amt);
+	}
+	
+	public void afterStackAmount(AbstractCard card, int amt) {
+	
+	}
+	
+	public void afterReduceAmount(AbstractCard card, int amt) {
+	
 	}
 }

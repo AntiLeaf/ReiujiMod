@@ -1,9 +1,8 @@
 package ReiujiMod.cards.ReiuijiDerivation;
 
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;

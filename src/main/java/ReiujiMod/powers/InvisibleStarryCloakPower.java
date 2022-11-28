@@ -1,17 +1,16 @@
 package ReiujiMod.powers;
 
 import ReiujiMod.ReiujiMod;
-import ReiujiMod.relics.StarryCloak;
+import ReiujiMod.patches.enums.AbstractPowerEnum;
 import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class HeatPower extends AbstractPower {
-	public static final String SIMPLE_NAME = HeatPower.class.getSimpleName();
+public class InvisibleStarryCloakPower extends AbstractPower implements InvisiblePower {
+	public static final String SIMPLE_NAME = InvisibleStarryCloakPower.class.getSimpleName();
 
 	public static final String POWER_ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/powers/" + SIMPLE_NAME + ".png";
@@ -20,26 +19,23 @@ public class HeatPower extends AbstractPower {
 	public static final String NAME = powerStrings.NAME;
 	public static final String[] DESCRIPTIONS =
 			powerStrings.DESCRIPTIONS;
+	
+	int amount;
 
-	public HeatPower(int amount) {
+	public InvisibleStarryCloakPower(int amount) {
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = AbstractDungeon.player;
 		this.amount = amount;
+		this.priority = 114514;
 		
-//		if (AbstractDungeon.player.hasRelic(StarryCloak.ID)) {
-//			AbstractDungeon.player.getRelic(StarryCloak.ID).flash();
-//			this.amount += 1;
-//		}
-		
-		this.type = PowerType.BUFF;
+		this.type = AbstractPowerEnum.NEUTRAL;
 		this.updateDescription();
 		this.img = new Texture(IMG_PATH);
 	}
 	
 	@Override
-	public void updateDescription() {
-//		this.description = (DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1]);
-		// TODO
+	public float modifyBlockLast(float blockAmount) {
+		return Float.max(0F, blockAmount + this.amount);
 	}
 }

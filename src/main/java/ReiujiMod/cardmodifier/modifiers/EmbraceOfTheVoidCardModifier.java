@@ -3,6 +3,9 @@ package ReiujiMod.cardmodifier.modifiers;
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.cardmodifier.StackableCardModifier;
+import ReiujiMod.characters.Reiuji;
+import ReiujiMod.embrace.EmbraceManager;
+import ReiujiMod.patches.field.EmbracedCountField;
 import basemod.abstracts.AbstractCardModifier;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
@@ -48,6 +51,26 @@ public class EmbraceOfTheVoidCardModifier extends StackableCardModifier {
 		AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDrawPileAction(
 				new VoidCard(), this.amount, true, true));
 	}
+	
+	@Override
+	public void afterStackAmount(AbstractCard card, int amt) {
+		EmbraceManager.updateEmbraced(card);
+	}
+	
+	@Override
+	public void afterReduceAmount(AbstractCard card, int amt) {
+		EmbraceManager.updateEmbraced(card);
+	}
+	
+	@Override
+	public void onInitialApplication(AbstractCard card) {
+		this.afterStackAmount(card, this.amount);
+	}
+	
+	@Override
+	public void onRemove(AbstractCard card) {
+		this.afterReduceAmount(card, this.amount);
+	}
 
 	public AbstractCardModifier makeCopy() {
 		return new EmbraceOfTheVoidCardModifier();
@@ -55,13 +78,19 @@ public class EmbraceOfTheVoidCardModifier extends StackableCardModifier {
 
 	@Override
 	public boolean shouldApply(AbstractCard card) {
-		return !((card instanceof AbstractReiujiCard) &&
-				((AbstractReiujiCard) card).maxEmbrace() <= 0);
+		return EmbraceManager.getMaxEmbrace(card) > 0;
 	}
 
+	@Override
 	public String modifyDescription(String rawDescription, AbstractCard card) {
-		return rawDescription + " NL " +
-				GameDictionary.parentWord.get("Embrace") + " " + this.amount +
-				(Settings.lineBreakViaCharacter ? " " : "") + LocalizedStrings.PERIOD;
+		String res = rawDescription + " NL " +
+				GameDictionary.parentWord.get("Embrace") + " " + this.amount;
+		
+		int amt = EmbracedCountField.embraced.get(card);
+		if (amt != this.amount)
+				res += "(" + EmbracedCountField.embraced.get(card) + ")";
+		
+		res += (Settings.lineBreakViaCharacter ? " " : "") + LocalizedStrings.PERIOD;
+		return res;
 	}
 }

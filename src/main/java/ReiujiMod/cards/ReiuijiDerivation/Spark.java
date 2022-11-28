@@ -1,13 +1,9 @@
 package ReiujiMod.cards.ReiuijiDerivation;
 
-import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.action.AddComboToHandAction;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.powers.HeatPower;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;

@@ -2,8 +2,8 @@ package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.action.AnonymousAction;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.embrace.EmbraceManager;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.powers.HeatPower;
 import com.evacipated.cardcrawl.mod.stslib.fields.cards.AbstractCard.AlwaysRetainField;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -12,7 +12,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.EquilibriumPower;
 
 public class VoidFire extends AbstractReiujiCard {
 	public static final String SIMPLE_NAME = VoidFire.class.getSimpleName();
@@ -46,7 +45,7 @@ public class VoidFire extends AbstractReiujiCard {
 
 	@Override
 	public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-		return super.canUse(p, m) && this.getEmbrace() > 0;
+		return super.canUse(p, m) && EmbraceManager.getEmbrace(this) > 0;
 	}
 	
 	public void use(AbstractPlayer p, AbstractMonster m) {

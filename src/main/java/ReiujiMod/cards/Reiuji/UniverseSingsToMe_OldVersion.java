@@ -3,7 +3,7 @@ package ReiujiMod.cards.Reiuji;
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.cards.ReiuijiDerivation.*;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsInHandAction;
 import com.evacipated.cardcrawl.mod.stslib.fields.cards.AbstractCard.AlwaysRetainField;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;

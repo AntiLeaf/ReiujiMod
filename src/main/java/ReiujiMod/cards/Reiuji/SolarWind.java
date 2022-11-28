@@ -2,7 +2,7 @@ package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.action.ReiujiExhaustSpecificCardAction;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;

@@ -1,27 +1,20 @@
 package ReiujiMod.abstracts;
 
 import ReiujiMod.ReiujiMod;
-import ReiujiMod.cardmodifier.StackableCardModifier;
-import ReiujiMod.cardmodifier.StackableCardModifierManager;
-import ReiujiMod.cardmodifier.modifiers.EmbraceOfTheVoidCardModifier;
-import ReiujiMod.powers.HasUsedSpellPower;
+import ReiujiMod.powers.InvisibleHasUsedSpellPower;
+import ReiujiMod.relics.StarryCloak;
 import basemod.abstracts.CustomCard;
 import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.mod.stslib.cards.interfaces.SpawnModificationCard;
 import com.evacipated.cardcrawl.mod.stslib.patches.FlavorText;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Stack;
-
-import static ReiujiMod.ReiujiMod.CHILLED_FLAVOR;
+import static ReiujiMod.ReiujiMod.CAUTION_FLAVOR;
 
 public abstract class AbstractReiujiCard extends CustomCard implements SpawnModificationCard {
 	protected static final Color CYAN_COLOR = new Color(0f, 204f / 255f, 0f, 1f);
@@ -30,10 +23,15 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 	public boolean isSpellCard = false;
 	public boolean isSupplement = false;
 
-	public int baseHeat = 0;
-	public int baseTempHP = 0;
-	public int heat = 0;
-	public int tempHP = 0;
+	public int baseHeat = -1;
+	public int heat = -1;
+	public boolean upgradedHeat = false;
+	public boolean isHeatModified = false;
+	
+	public int baseTempHP = -1;
+	public int tempHP = -1;
+	public boolean upgradedTempHP = false;
+	public boolean isTempHPModified = false;
 	
 	public AbstractReiujiCard(
 			String id,
@@ -49,7 +47,7 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 		super(
 				id,
 				name,
-				"img/cards/Cirno/Th123Cirno.png",
+				"img/cards/Reiuji/Th123Cirno.png",
 				cost,
 				rawDescription,
 				type,
@@ -58,8 +56,7 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 				target
 		);
 		
-//		FlavorText.AbstractCardFlavorFields.textColor.set(this, CHILLED);
-		FlavorText.AbstractCardFlavorFields.boxColor.set(this, CHILLED_FLAVOR);
+		FlavorText.AbstractCardFlavorFields.boxColor.set(this, CAUTION_FLAVOR);
 	}
 
 	@Override
@@ -75,14 +72,18 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 		super.applyPowers();
 
 		this.heat = this.baseHeat;
+		this.tempHP = this.baseTempHP;
 
-		if (AbstractDungeon.player.hasRelic("TODO")) {
-			if (this.baseHeat > 0)
+		if (AbstractDungeon.player.hasRelic(StarryCloak.ID)) {
+			if (this.baseHeat >= 0)
 				this.heat += 1;
 
-			if (this.baseTempHP > 0)
-				this.baseTempHP += 1;
+			if (this.baseTempHP >= 0)
+				this.tempHP += 1;
 		}
+		
+		this.isHeatModified = (this.heat != this.baseHeat);
+		this.isTempHPModified = (this.tempHP != this.baseTempHP);
 	}
 
 	@Override
@@ -94,8 +95,8 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 			return false;
 
 		return !(this.isSpellCard &&
-				p.hasPower(HasUsedSpellPower.POWER_ID) &&
-				this != ((HasUsedSpellPower) p.getPower(HasUsedSpellPower.POWER_ID)).spell);
+				p.hasPower(InvisibleHasUsedSpellPower.POWER_ID) &&
+				this != ((InvisibleHasUsedSpellPower) p.getPower(InvisibleHasUsedSpellPower.POWER_ID)).spell);
 	}
 
 	@Override
@@ -110,7 +111,18 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 		card.cantBePlayed = this.cantBePlayed;
 		card.isSpellCard = this.isSpellCard;
 		card.isSupplement = this.isSupplement;
-//		card.isCombo = this.isCombo;
+		
+		card.baseHeat = this.baseHeat;
+		card.heat = this.heat;
+		card.upgradedHeat = this.upgradedHeat;
+		card.isHeatModified = this.isHeatModified;
+		
+		card.baseTempHP = this.baseTempHP;
+		card.tempHP = this.tempHP;
+		card.upgradedTempHP = this.upgradedTempHP;
+		card.isTempHPModified = this.isTempHPModified;
+		
+		// Copilot is good ↑
 
 		return card;
 	}
@@ -141,24 +153,11 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 		super.triggerOnEndOfPlayerTurn();
 	}
 
-	public int getEmbrace() {
-		return StackableCardModifierManager.getStackedValue(
-				this, EmbraceOfTheVoidCardModifier.ID);
-	}
-
-	public int maxEmbrace() {
-		return this.cost - this.getEmbrace();
-	}
-
-	public void addEmbrace(int amt) {
-		amt = Integer.min(amt, this.maxEmbrace());
-
-		if (amt > 0)
-			StackableCardModifierManager.addModifier(
-					this, new EmbraceOfTheVoidCardModifier(amt));
-	}
-
 	public boolean removeEmbraceAfterPlayed() {
+		return false;
+	}
+	
+	public boolean canHaveInfinityEmbrace() {
 		return false;
 	}
 

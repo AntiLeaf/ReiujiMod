@@ -1,11 +1,7 @@
 package ReiujiMod.cards.ReiuijiDerivation;
 
-import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.patches.AbstractCardEnum;
-import basemod.BaseMod;
-import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsAction;
-import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsInHandAction;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
@@ -17,9 +13,6 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import org.apache.logging.log4j.Level;
-
-import java.util.ArrayList;
 
 public class Supernova extends AbstractReiujiCard {
 

@@ -1,22 +1,15 @@
 package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.action.ReiujiExhaustSpecificCardAction;
 import ReiujiMod.cards.ReiuijiDerivation.Spark;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.powers.EnchantPower;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Enchant extends AbstractReiujiCard {
 

@@ -3,7 +3,7 @@ package ReiujiMod.characters;
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.cards.Reiuji.Defend_Reiuji;
 import ReiujiMod.cards.Reiuji.Strike_Reiuji;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.patches.ReiujiModClassEnum;
 import ReiujiMod.relics.EyeOfYatagarasu;
 import basemod.abstracts.CustomPlayer;

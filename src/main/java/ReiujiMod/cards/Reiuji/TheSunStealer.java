@@ -1,11 +1,9 @@
 package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.patches.AbstractCardEnum;
-import ReiujiMod.powers.SeptentrionPower;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.powers.TheSunStealerPower;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;

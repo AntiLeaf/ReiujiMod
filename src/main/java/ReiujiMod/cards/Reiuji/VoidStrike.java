@@ -3,7 +3,8 @@ package ReiujiMod.cards.Reiuji;
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.action.AnonymousAction;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.embrace.EmbraceManager;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -49,7 +50,7 @@ public class VoidStrike extends AbstractReiujiCard {
 	public void applyPowers() {
 		super.applyPowers();
 
-		if (this.getEmbrace() > 0) {
+		if (EmbraceManager.getEmbrace(this) > 0) {
 			this.damage *= 2;
 			this.isDamageModified = (this.damage != this.baseDamage);
 		}
@@ -60,7 +61,7 @@ public class VoidStrike extends AbstractReiujiCard {
 				new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL)));
 
 		this.addToBot(new AnonymousAction(() -> {
-			this.addEmbrace(this.magicNumber);
+			EmbraceManager.addEmbrace(this, this.magicNumber);
 		}));
 	}
 	

@@ -3,15 +3,16 @@ package ReiujiMod.cards.Reiuji;
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.patches.enums.AbstractCardEnum;
-import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
+import com.evacipated.cardcrawl.mod.stslib.patches.core.AbstractCreature.TempHPField;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class Defend_Reiuji extends AbstractReiujiCard {
-	public static final String SIMPLE_NAME = Defend_Reiuji.class.getSimpleName();
+public class AbsoluteDomain extends AbstractReiujiCard {
+	public static final String SIMPLE_NAME = AbsoluteDomain.class.getSimpleName();
 
 	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/cards/" + SIMPLE_NAME + ".png";
@@ -20,11 +21,9 @@ public class Defend_Reiuji extends AbstractReiujiCard {
 	public static final String NAME = cardStrings.NAME;
 	public static final String DESCRIPTION = cardStrings.DESCRIPTION;
 
-	private static final int COST = 1;
-	private static final int BLOCK = 5;
-	private static final int UPG_BLOCK = 3;
+	private static final int COST = 2;
 
-	public Defend_Reiuji() {
+	public AbsoluteDomain() {
 		super(
 			ID,
 			NAME,
@@ -33,27 +32,32 @@ public class Defend_Reiuji extends AbstractReiujiCard {
 			DESCRIPTION,
 			CardType.SKILL,
 			AbstractCardEnum.REIUJI_COLOR,
-			CardRarity.BASIC,
-			CardTarget.SELF
+			CardRarity.UNCOMMON,
+			CardTarget.NONE
 		);
 
-		this.block = this.baseBlock = BLOCK;
-		this.tags.add(CardTags.STARTER_DEFEND);
+		this.exhaust = true;
 	}
 	
 	public void use(AbstractPlayer p, AbstractMonster m) {
-		this.addToBot(new GainBlockAction(p, this.block));
+//		if (p.hasPower(HeatPower.POWER_ID))
+//			this.addToBot(new ApplyPowerAction(p, p,
+//					new HeatPower(p.getPower(HeatPower.POWER_ID).amount)));
+
+		if (TempHPField.tempHp.get(this) > 0)
+			this.addToBot(new AddTemporaryHPAction(p, p,
+					TempHPField.tempHp.get(this)));
 	}
 	
 	@Override
 	public AbstractCard makeCopy() {
-		return new Defend_Reiuji();
+		return new AbsoluteDomain();
 	}
 	
 	public void upgrade() {
 		if (!this.upgraded) {
 			this.upgradeName();
-			this.upgradeBlock(UPG_BLOCK);
+			this.exhaust = false;
 			this.initializeDescription();
 		}
 	}

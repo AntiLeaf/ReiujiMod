@@ -3,7 +3,6 @@ package ReiujiMod.cardmodifier;
 import ReiujiMod.ReiujiMod;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.helpers.CardModifierManager;
-import basemod.patches.com.megacrit.cardcrawl.cards.AbstractCard.CardModifierPatches;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
@@ -12,14 +11,10 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.sun.istack.internal.NotNull;
 import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Stack;
 
 public class StackableCardModifierManager {
 	public StackableCardModifierManager() {
@@ -57,7 +52,7 @@ public class StackableCardModifierManager {
 
 			StackableCardModifier original = getStackableModifier(card, id);
 			if (original != null) {
-				original.stack(card, mod.amount);
+				original.stackAmount(card, mod.amount);
 				return;
 			}
 		}
@@ -73,7 +68,7 @@ public class StackableCardModifierManager {
 			return;
 		}
 
-		mod.reduce(card, amt);
+		mod.reduceAmount(card, amt);
 	}
 
 	public static void removeSpecificModifier(AbstractCard card, AbstractCardModifier mod, boolean includeInherent) {

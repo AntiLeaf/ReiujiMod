@@ -1,68 +1,59 @@
 package ReiujiMod.cards.Reiuji;
 
-import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.patches.AbstractCardEnum;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
+import ReiujiMod.cards.ReiuijiDerivation.Spark;
+import ReiujiMod.patches.enums.AbstractCardEnum;
+import ReiujiMod.powers.EnchantPower;
+import ReiujiMod.powers.FusionReactorPower;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class SpreadSpark extends AbstractReiujiCard {
-	public static final String SIMPLE_NAME = SpreadSpark.class.getSimpleName();
+public class FusionReactor extends AbstractReiujiCard {
 
-	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
+	public static final String ID = FusionReactor.class.getSimpleName();
 	public static final String IMG_PATH = "img/cards/" + ID + ".png";
 	private static final CardStrings cardStrings =
 			CardCrawlGame.languagePack.getCardStrings(ID);
 	public static final String NAME = cardStrings.NAME;
 	public static final String DESCRIPTION = cardStrings.DESCRIPTION;
-
 	private static final int COST = 1;
-	private static final int DAMAGE = 1;
-	private static final int TIMES = 10;
-	private static final int UPG_TIMES = 4;
+	private static final int AMT = 3;
+	private static final int UPG_AMT = 1;
 
-	public SpreadSpark() {
+	public FusionReactor() {
 		super(
 			ID,
 			NAME,
 			IMG_PATH,
 			COST,
 			DESCRIPTION,
-			CardType.ATTACK,
+			CardType.POWER,
 			AbstractCardEnum.REIUJI_COLOR,
-			CardRarity.UNCOMMON,
-			CardTarget.ENEMY
+			CardRarity.COMMON,
+			CardTarget.SELF
 		);
 
-		this.damage = this.baseDamage = DAMAGE;
-		this.magicNumber = this.baseMagicNumber = TIMES;
+		this.magicNumber = this.baseMagicNumber = AMT;
 	}
 	
 	public void use(AbstractPlayer p, AbstractMonster m) {
-		for (int i = 0; i < this.magicNumber; i++)
-			this.addToBot(new DamageAction(m,
-				new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL)));
-	}
-
-	@Override
-	public void applyPowers() {
-		// pass
+		this.addToBot(new ApplyPowerAction(p, p,
+				new FusionReactorPower(this.magicNumber)));
 	}
 	
 	@Override
 	public AbstractCard makeCopy() {
-		return new SpreadSpark();
+		return new FusionReactor();
 	}
 	
 	public void upgrade() {
 		if (!this.upgraded) {
 			this.upgradeName();
-			this.upgradeMagicNumber(UPG_TIMES);
+			this.upgradeMagicNumber(UPG_AMT);
 			this.initializeDescription();
 		}
 	}

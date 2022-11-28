@@ -1,9 +1,6 @@
 package ReiujiMod.abstracts;
 
-import com.evacipated.cardcrawl.mod.stslib.patches.FlavorText;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-
-import static ReiujiMod.ReiujiMod.CHILLED_FLAVOR;
 
 public abstract class AbstractReiujiEchoDerivationCard extends AbstractReiujiEchoCard {
 	AbstractReiujiEchoCard original;
@@ -11,7 +8,18 @@ public abstract class AbstractReiujiEchoDerivationCard extends AbstractReiujiEch
 	public AbstractReiujiEchoDerivationCard(
 			AbstractReiujiEchoCard original
 	) {
-
+		super(original.cardID,
+				original.name,
+				"",
+				original.cost,
+				original.rawDescription,
+				original.type,
+				original.color,
+				original.rarity,
+				original.target);
+		
+		AbstractReiujiEchoCard temp = (AbstractReiujiEchoCard) original.makeCopy();
+		
 		this.original = original;
 	}
 

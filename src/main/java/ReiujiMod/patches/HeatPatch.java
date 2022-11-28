@@ -30,7 +30,7 @@ public class HeatPatch {
 		private static class BottomLocator extends SpireInsertLocator {
 			public int[] Locate(CtBehavior ctMethodToPatch)
 					throws CannotCompileException, PatchingException {
-				int[] loc = LineFinder.findInOrder(ctMethodToPatch, new ArrayList<>(),
+				int[] loc = LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<>(),
 						new Matcher.MethodCallMatcher(
 								AbstractCreature.class, "damage"));
 				return new int[]{loc[loc.length - 1]};
@@ -63,7 +63,7 @@ public class HeatPatch {
 		private static class BottomLocator extends SpireInsertLocator {
 			public int[] Locate(CtBehavior ctMethodToPatch)
 					throws CannotCompileException, PatchingException {
-				int[] loc = LineFinder.findInOrder(ctMethodToPatch, new ArrayList<>(),
+				int[] loc = LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<>(),
 						new Matcher.MethodCallMatcher(
 								MonsterGroup.class, "areMonstersBasicallyDead"));
 				return new int[]{loc[loc.length - 1]};
@@ -71,7 +71,7 @@ public class HeatPatch {
 		}
 
 		@SpireInsertPatch(locator = BottomLocator.class)
-		public static void Insert(DamageAction act) {
+		public static void Insert(DamageAllEnemiesAction act) {
 			if (act.damageType != DamageInfo.DamageType.NORMAL)
 				return;
 

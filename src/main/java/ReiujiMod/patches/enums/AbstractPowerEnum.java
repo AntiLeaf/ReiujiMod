@@ -1,4 +1,4 @@
-package ReiujiMod.patches;
+package ReiujiMod.patches.enums;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.megacrit.cardcrawl.powers.AbstractPower;

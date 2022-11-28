@@ -28,22 +28,14 @@ public class EyeOfYatagarasu extends CustomRelic {
 		this.counter = 0;
 	}
 	
+	@Override
 	public String getUpdatedDescription() {
 		return DESCRIPTIONS[0];
 	}
 	
+	@Override
 	public AbstractRelic makeCopy() {
 		return new EyeOfYatagarasu();
-	}
-
-	@Override
-	public void atTurnStart() {
-		int maxHeal = (AbstractDungeon.player.maxHealth + 4) / 5;
-
-		this.counter += AMT;
-		this.counter = Integer.min(this.counter, maxHeal);
-
-		this.beginLongPulse();
 	}
 
 	@Override

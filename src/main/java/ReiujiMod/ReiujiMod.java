@@ -7,7 +7,7 @@ import ReiujiMod.cards.Reiuji.InstantCharge;
 import ReiujiMod.cards.Reiuji.Defend_Reiuji;
 import ReiujiMod.cards.Reiuji.Strike_Reiuji;
 import ReiujiMod.characters.Reiuji;
-import ReiujiMod.powers.HasUsedSpellPower;
+import ReiujiMod.powers.InvisibleHasUsedSpellPower;
 import ReiujiMod.relics.EyeOfYatagarasu;
 import basemod.BaseMod;
 import basemod.interfaces.*;
@@ -17,7 +17,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -31,12 +30,11 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import static ReiujiMod.patches.AbstractCardEnum.REIUJI_COLOR;
-import static ReiujiMod.patches.AbstractCardEnum.REIUJI_DERIVATION_COLOR;
+import static ReiujiMod.patches.enums.AbstractCardEnum.REIUJI_COLOR;
+import static ReiujiMod.patches.enums.AbstractCardEnum.REIUJI_DERIVATION_COLOR;
 import static ReiujiMod.patches.ReiujiModClassEnum.REIUJI;
 
 @SuppressWarnings("Duplicates")
@@ -75,7 +73,7 @@ public class ReiujiMod implements PostExhaustSubscriber,
 	private static final String ENERGY_ORB_CC_PORTRAIT = "img/1024/cardOrb.png";
 	
 	public static final Color CAUTION = CardHelper.getColor(0, 191, 255);
-	public static final Color CHILLED_FLAVOR = CardHelper.getColor(204, 255, 255);
+	public static final Color CAUTION_FLAVOR = CardHelper.getColor(204, 255, 255);
 	public static final String CARD_ENERGY_ORB = "img/UI/energyOrb.png";
 	
 	private static final String MY_CHARACTER_BUTTON = "img/charSelect/ReiujiButton.png";
@@ -219,7 +217,7 @@ public class ReiujiMod implements PostExhaustSubscriber,
 				AbstractPlayer p = AbstractDungeon.player;
 
 				AbstractDungeon.actionManager.addToBottom(
-						new ApplyPowerAction(p, p, new HasUsedSpellPower(card)));
+						new ApplyPowerAction(p, p, new InvisibleHasUsedSpellPower(card)));
 			}
 
 //			if (card.isCombo)
@@ -361,14 +359,6 @@ public class ReiujiMod implements PostExhaustSubscriber,
 
 		for (AbstractGameAction act : temp)
 			AbstractDungeon.actionManager.addToTop(act);
-	}
-
-	public static void addEmbrace(AbstractCard card, int amt) {
-		if (card instanceof AbstractReiujiCard)
-			((AbstractReiujiCard) card).addEmbrace(amt);
-		else
-			StackableCardModifierManager.addModifier(
-					card, new EmbraceOfTheVoidCardModifier(amt));
 	}
 	
 //	public static AbstractCard getRandomReiujiCard() {

@@ -2,7 +2,7 @@ package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.powers.HeatPower;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 
 public class InstantCharge extends AbstractReiujiCard {
@@ -41,13 +40,14 @@ public class InstantCharge extends AbstractReiujiCard {
 			CardTarget.SELF
 		);
 
-		this.magicNumber = this.baseMagicNumber = HEAT;
+		this.heat = this.baseHeat = HEAT;
+		this.magicNumber = this.baseMagicNumber = VUL_CNT;
 	}
 	
 	public void use(AbstractPlayer p, AbstractMonster m) {
 		this.addToBot(new ApplyPowerAction(p, p,
-				new VulnerablePower(p, VUL_CNT, false)));
-		this.addToBot(new ApplyPowerAction(p, p, new HeatPower(HEAT)));
+				new VulnerablePower(p, this.magicNumber, false)));
+		this.addToBot(new ApplyPowerAction(p, p, new HeatPower(this.heat)));
 	}
 	
 	@Override

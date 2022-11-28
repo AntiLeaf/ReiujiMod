@@ -3,7 +3,7 @@ package ReiujiMod.cards.Reiuji;
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.action.AnonymousAction;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
@@ -16,8 +16,8 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-public class Lit extends AbstractReiujiCard {
-	public static final String SIMPLE_NAME = Lit.class.getSimpleName();
+public class Ignite extends AbstractReiujiCard {
+	public static final String SIMPLE_NAME = Ignite.class.getSimpleName();
 
 	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/cards/" + ID + ".png";
@@ -30,7 +30,7 @@ public class Lit extends AbstractReiujiCard {
 	private static final int DAMAGE = 7;
 	private static final int UPG_COST = 0;
 
-	public Lit() {
+	public Ignite() {
 		super(
 			ID,
 			NAME,
@@ -69,7 +69,7 @@ public class Lit extends AbstractReiujiCard {
 	
 	@Override
 	public AbstractCard makeCopy() {
-		return new Lit();
+		return new Ignite();
 	}
 	
 	public void upgrade() {

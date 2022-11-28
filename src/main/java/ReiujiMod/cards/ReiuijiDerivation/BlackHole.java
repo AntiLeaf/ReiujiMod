@@ -2,16 +2,11 @@ package ReiujiMod.cards.ReiuijiDerivation;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.action.SelectOneAndMoveAction;
 import ReiujiMod.cards.Reiuji.UniverseSingsToMe;
-import ReiujiMod.patches.AbstractCardEnum;
-import ReiujiMod.powers.HeatPower;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import basemod.BaseMod;
-import basemod.patches.com.megacrit.cardcrawl.characters.AbstractPlayer.MaxHandSizePatch;
-import com.evacipated.cardcrawl.mod.stslib.actions.common.MoveCardsAction;
 import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsAction;
 import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsInHandAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -21,8 +16,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import org.apache.logging.log4j.Level;
-
-import java.util.ArrayList;
 
 public class BlackHole extends AbstractReiujiCard {
 

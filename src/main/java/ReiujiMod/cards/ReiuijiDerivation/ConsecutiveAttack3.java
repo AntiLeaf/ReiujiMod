@@ -3,7 +3,7 @@ package ReiujiMod.cards.ReiuijiDerivation;
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.action.AddComboToHandAction;
-import ReiujiMod.patches.AbstractCardEnum;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -43,7 +43,7 @@ public class ConsecutiveAttack3 extends AbstractReiujiCard {
 		
 		this.damage = this.baseDamage = DAMAGE;
 		this.magicNumber = this.baseMagicNumber = VUL;
-		this.comboInit();
+//		this.comboInit();
 	}
 
 	public void use(AbstractPlayer p, AbstractMonster m) {

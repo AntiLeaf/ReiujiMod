@@ -2,17 +2,14 @@ package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.patches.AbstractCardEnum;
-import ReiujiMod.powers.AbsoluteZeroPower;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import java.lang.reflect.Type;
-
+@Deprecated
 public class TemplateCard extends AbstractReiujiCard {
 	public static final String SIMPLE_NAME = TemplateCard.class.getSimpleName();
 
@@ -31,7 +28,7 @@ public class TemplateCard extends AbstractReiujiCard {
 			IMG_PATH,
 			COST,
 			DESCRIPTION,
-			CardType.POWER,
+			CardType.SKILL,
 			AbstractCardEnum.REIUJI_COLOR,
 			CardRarity.UNCOMMON,
 			CardTarget.SELF

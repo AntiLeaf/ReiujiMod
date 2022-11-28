@@ -1,9 +1,7 @@
 package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.abstracts.AbstractReiujiCard;
-import ReiujiMod.cards.ReiuijiDerivation.Spark;
-import ReiujiMod.patches.AbstractCardEnum;
-import ReiujiMod.powers.EnchantPower;
+import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.powers.SeptentrionPower;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;

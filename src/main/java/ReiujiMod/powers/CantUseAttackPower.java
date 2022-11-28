@@ -1,8 +1,7 @@
 package ReiujiMod.powers;
 
 import ReiujiMod.ReiujiMod;
-import ReiujiMod.patches.AbstractCardEnum;
-import ReiujiMod.patches.AbstractPowerEnum;
+import ReiujiMod.patches.enums.AbstractPowerEnum;
 import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;

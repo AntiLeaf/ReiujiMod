@@ -1,14 +1,9 @@
 package ReiujiMod.abstracts;
 
-import ReiujiMod.powers.HasUsedSpellPower;
-import basemod.abstracts.CustomCard;
-import com.badlogic.gdx.graphics.Color;
-import com.evacipated.cardcrawl.mod.stslib.cards.interfaces.SpawnModificationCard;
 import com.evacipated.cardcrawl.mod.stslib.patches.FlavorText;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-import static ReiujiMod.ReiujiMod.CHILLED_FLAVOR;
+import static ReiujiMod.ReiujiMod.CAUTION_FLAVOR;
 
 public abstract class AbstractReiujiEchoCard extends AbstractReiujiCard {
 	boolean used = false;
@@ -37,7 +32,7 @@ public abstract class AbstractReiujiEchoCard extends AbstractReiujiCard {
 		);
 		
 //		FlavorText.AbstractCardFlavorFields.textColor.set(this, CHILLED);
-		FlavorText.AbstractCardFlavorFields.boxColor.set(this, CHILLED_FLAVOR);
+		FlavorText.AbstractCardFlavorFields.boxColor.set(this, CAUTION_FLAVOR);
 	}
 	
 	@Override

@@ -1,59 +1,57 @@
 package ReiujiMod.cards.Reiuji;
 
-import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.patches.enums.AbstractCardEnum;
-import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import ReiujiMod.powers.EnterTheVoidPower;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class Defend_Reiuji extends AbstractReiujiCard {
-	public static final String SIMPLE_NAME = Defend_Reiuji.class.getSimpleName();
+public class EnterTheVoid extends AbstractReiujiCard {
 
-	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
-	public static final String IMG_PATH = "img/cards/" + SIMPLE_NAME + ".png";
+	public static final String ID = EnterTheVoid.class.getSimpleName();
+	public static final String IMG_PATH = "img/cards/" + ID + ".png";
 	private static final CardStrings cardStrings =
 			CardCrawlGame.languagePack.getCardStrings(ID);
 	public static final String NAME = cardStrings.NAME;
 	public static final String DESCRIPTION = cardStrings.DESCRIPTION;
+	private static final int COST = 2;
+	private static final int UPG_COST = 1;
+	static final int AMT = 1;
 
-	private static final int COST = 1;
-	private static final int BLOCK = 5;
-	private static final int UPG_BLOCK = 3;
-
-	public Defend_Reiuji() {
+	public EnterTheVoid() {
 		super(
 			ID,
 			NAME,
 			IMG_PATH,
 			COST,
 			DESCRIPTION,
-			CardType.SKILL,
+			CardType.POWER,
 			AbstractCardEnum.REIUJI_COLOR,
-			CardRarity.BASIC,
-			CardTarget.SELF
+			CardRarity.UNCOMMON,
+			CardTarget.NONE
 		);
-
-		this.block = this.baseBlock = BLOCK;
-		this.tags.add(CardTags.STARTER_DEFEND);
+		
+		this.magicNumber = this.baseMagicNumber = AMT;
 	}
 	
 	public void use(AbstractPlayer p, AbstractMonster m) {
-		this.addToBot(new GainBlockAction(p, this.block));
+		this.addToBot(new ApplyPowerAction(p, p,
+				new EnterTheVoidPower(this.magicNumber)));
 	}
 	
 	@Override
 	public AbstractCard makeCopy() {
-		return new Defend_Reiuji();
+		return new EnterTheVoid();
 	}
 	
 	public void upgrade() {
 		if (!this.upgraded) {
 			this.upgradeName();
-			this.upgradeBlock(UPG_BLOCK);
+			this.upgradeBaseCost(UPG_COST);
 			this.initializeDescription();
 		}
 	}
