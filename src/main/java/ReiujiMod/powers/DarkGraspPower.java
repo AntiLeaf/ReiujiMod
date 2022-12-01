@@ -4,14 +4,21 @@ import ReiujiMod.ReiujiMod;
 import ReiujiMod.action.AddEmbraceAction;
 import ReiujiMod.embrace.EmbraceManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
+import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class EnterTheVoidPower extends AbstractPower {
-	public static final String SIMPLE_NAME = EnterTheVoidPower.class.getSimpleName();
+import java.util.ArrayList;
+
+public class DarkGraspPower extends AbstractPower implements InvisiblePower {
+	public static final String SIMPLE_NAME = DarkGraspPower.class.getSimpleName();
 
 	public static final String POWER_ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/powers/" + SIMPLE_NAME + ".png";
@@ -21,7 +28,7 @@ public class EnterTheVoidPower extends AbstractPower {
 	public static final String[] DESCRIPTIONS =
 			powerStrings.DESCRIPTIONS;
 
-	public EnterTheVoidPower(int amount) {
+	public DarkGraspPower(int amount) {
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = AbstractDungeon.player;
@@ -33,8 +40,20 @@ public class EnterTheVoidPower extends AbstractPower {
 	}
 
 	@Override
-	public void onCardDraw(AbstractCard card) {
-		this.addToTop(new AddEmbraceAction(card, this.amount));
+	public void onAfterCardPlayed(AbstractCard c) {
+		ArrayList<AbstractCard> cards = new ArrayList<>();
+		
+		for (AbstractCard card : AbstractDungeon.player.hand.group)
+			if (card != c)
+				cards.add(card);
+		
+		if (!cards.isEmpty()) {
+			this.addToBot(new AddEmbraceAction(
+					cards.get(AbstractDungeon.cardRandomRng.random(cards.size() - 1)),
+					this.amount));
+			
+			this.flash();
+		}
 	}
 	
 	@Override

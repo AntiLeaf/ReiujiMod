@@ -40,6 +40,8 @@ public class MolecularCloud extends AbstractReiujiCard {
 		this.block = this.baseBlock = TEMP_HP;
 		this.cantBePlayed = true;
 		this.isSupplement = true;
+		
+		this.cardsToPreview = new MainSequenceStar();
 	}
 
 	public void use(AbstractPlayer p, AbstractMonster m) {

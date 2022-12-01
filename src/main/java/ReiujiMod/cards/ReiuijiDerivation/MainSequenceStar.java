@@ -40,6 +40,8 @@ public class MainSequenceStar extends AbstractReiujiCard {
 		this.magicNumber = this.baseMagicNumber = DRAW;
 		this.cantBePlayed = true;
 		this.isSupplement = true;
+		
+		this.cardsToPreview = new RedGiantStar();
 	}
 
 	public void use(AbstractPlayer p, AbstractMonster m) {

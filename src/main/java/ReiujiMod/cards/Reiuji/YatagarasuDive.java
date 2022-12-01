@@ -78,7 +78,7 @@ public class YatagarasuDive extends AbstractReiujiCard {
 						AbstractGameAction.AttackEffect.BLUNT_HEAVY));
 
 			this.addToBot(new ApplyPowerAction(m, p,
-					new CantDealDamageToPlayerPower(1)));
+					new CantDealDamageToPlayerPower(m, 1)));
 		}
 		else {
 			ReiujiMod.logger.log(Level.WARN,

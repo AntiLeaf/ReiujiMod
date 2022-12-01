@@ -38,7 +38,7 @@ public class EmbraceOfTheVoidCardModifier extends StackableCardModifier {
 	@Override
 	public boolean removeOnCardPlayed(AbstractCard card) {
 		return !((card instanceof AbstractReiujiCard) &&
-				((AbstractReiujiCard) card).removeEmbraceAfterPlayed());
+				!((AbstractReiujiCard) card).removeEmbraceAfterPlayed());
 	}
 
 	@Override

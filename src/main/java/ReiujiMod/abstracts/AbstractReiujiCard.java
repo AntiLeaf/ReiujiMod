@@ -149,16 +149,22 @@ public abstract class AbstractReiujiCard extends CustomCard implements SpawnModi
 
 	@Override
 	public void triggerOnEndOfPlayerTurn() {
-		this.triggerOnLeaveHand(false, true);
+		if (!this.retain)
+			this.triggerOnLeaveHand(false, true);
+		
 		super.triggerOnEndOfPlayerTurn();
 	}
 
 	public boolean removeEmbraceAfterPlayed() {
-		return false;
+		return true;
 	}
 	
 	public boolean canHaveInfinityEmbrace() {
 		return false;
+	}
+	
+	public int onEmbracedModifyAmount(int amount) {
+		return amount;
 	}
 
 	public void addActionsToTop(AbstractGameAction... actions) {

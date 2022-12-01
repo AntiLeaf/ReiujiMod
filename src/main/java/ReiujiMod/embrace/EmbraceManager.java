@@ -6,6 +6,7 @@ import ReiujiMod.cardmodifier.StackableCardModifierManager;
 import ReiujiMod.cardmodifier.modifiers.EmbraceOfTheVoidCardModifier;
 import ReiujiMod.patches.field.EmbracedCountField;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import org.jetbrains.annotations.NotNull;
 
 public class EmbraceManager {
 	public EmbraceManager() {
@@ -18,13 +19,18 @@ public class EmbraceManager {
 	}
 	
 	public static int getMaxEmbrace(AbstractCard card) {
-		if (card instanceof AbstractReiujiCard &&
-				((AbstractReiujiCard) card).cantBePlayed) {
-			return 0;
+		if (card instanceof AbstractReiujiCard) {
+			AbstractReiujiCard c = (AbstractReiujiCard) card;
+			
+			if (c.canHaveInfinityEmbrace())
+				return Integer.MAX_VALUE;
+			
+			if (c.cantBePlayed)
+				return 0;
 		}
 		
 		if (card.costForTurn < 0)
-			return 0;
+			return card.costForTurn < -1 ? 0 : Integer.MAX_VALUE;
 		
 		return card.cost - EmbraceManager.getEmbrace(card);
 	}
@@ -32,13 +38,17 @@ public class EmbraceManager {
 	public static void addEmbrace(AbstractCard card, int amt) {
 		amt = Integer.min(amt, EmbraceManager.getMaxEmbrace(card));
 		
-		StackableCardModifierManager.addModifier(
-				card, new EmbraceOfTheVoidCardModifier(amt));
+		if (amt > 0) {
+			if (card instanceof AbstractReiujiCard)
+				amt = ((AbstractReiujiCard) card).onEmbracedModifyAmount(amt);
+			
+			if (amt > 0)
+				StackableCardModifierManager.addModifier(
+						card, new EmbraceOfTheVoidCardModifier(amt));
+		}
 	}
 	
-	public static void calcEmbraced(AbstractCard card) {
-		assert card.cost >= 0;
-		
+	public static void calcEmbraced(@NotNull AbstractCard card) {
 		if (card.costForTurn <= 0)
 			return;
 		
@@ -48,7 +58,10 @@ public class EmbraceManager {
 		EmbracedCountField.embraced.set(card, amt);
 	}
 	
-	public static void resetEmbraced(AbstractCard card) {
+	public static void resetEmbraced(@NotNull AbstractCard card) {
+		if (card.costForTurn < 0)
+			return;
+		
 		int amt = EmbracedCountField.embraced.get(card);
 		if (amt > 0)
 			card.updateCost(amt);
@@ -56,8 +69,10 @@ public class EmbraceManager {
 		EmbracedCountField.embraced.set(card, 0);
 	}
 	
-	public static void updateEmbraced(AbstractCard card) {
-		EmbraceManager.resetEmbraced(card);
-		EmbraceManager.calcEmbraced(card);
+	public static void updateEmbraced(@NotNull AbstractCard card) {
+		if (card.costForTurn >= 0) {
+			EmbraceManager.resetEmbraced(card);
+			EmbraceManager.calcEmbraced(card);
+		}
 	}
 }

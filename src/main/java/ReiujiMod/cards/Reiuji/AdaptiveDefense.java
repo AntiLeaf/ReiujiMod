@@ -36,7 +36,7 @@ public class AdaptiveDefense extends AbstractReiujiCard {
 			DESCRIPTION,
 			CardType.SKILL,
 			AbstractCardEnum.REIUJI_COLOR,
-			CardRarity.COMMON,
+			CardRarity.UNCOMMON,
 			CardTarget.SELF
 		);
 

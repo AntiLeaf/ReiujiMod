@@ -1,17 +1,18 @@
 package ReiujiMod.powers;
 
 import ReiujiMod.ReiujiMod;
-import ReiujiMod.action.AddEmbraceAction;
-import ReiujiMod.embrace.EmbraceManager;
+import basemod.BaseMod;
 import com.badlogic.gdx.graphics.Texture;
-import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class EnterTheVoidPower extends AbstractPower {
-	public static final String SIMPLE_NAME = EnterTheVoidPower.class.getSimpleName();
+public class ChargeUpPreparePower extends AbstractPower {
+	public static final String SIMPLE_NAME = ChargeUpPreparePower.class.getSimpleName();
 
 	public static final String POWER_ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/powers/" + SIMPLE_NAME + ".png";
@@ -21,7 +22,7 @@ public class EnterTheVoidPower extends AbstractPower {
 	public static final String[] DESCRIPTIONS =
 			powerStrings.DESCRIPTIONS;
 
-	public EnterTheVoidPower(int amount) {
+	public ChargeUpPreparePower(int amount) {
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = AbstractDungeon.player;
@@ -31,10 +32,19 @@ public class EnterTheVoidPower extends AbstractPower {
 		this.updateDescription();
 		this.img = new Texture(IMG_PATH);
 	}
-
+	
 	@Override
-	public void onCardDraw(AbstractCard card) {
-		this.addToTop(new AddEmbraceAction(card, this.amount));
+	public void stackPower(int amt) {
+		if (amt > this.amount) {
+			this.fontScale = 8.0F;
+			this.amount = amt;
+		}
+	}
+	
+	@Override
+	public void atStartOfTurn() {
+		this.addToTop(new ApplyPowerAction(this.owner, this.owner, new ChargeUpPower(this.amount)));
+		this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
 	}
 	
 	@Override

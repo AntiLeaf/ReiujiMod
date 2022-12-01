@@ -3,12 +3,12 @@ package ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.cardmodifier.StackableCardModifierManager;
 import ReiujiMod.cardmodifier.modifiers.EmbraceOfTheVoidCardModifier;
-import ReiujiMod.cards.Reiuji.InstantCharge;
-import ReiujiMod.cards.Reiuji.Defend_Reiuji;
-import ReiujiMod.cards.Reiuji.Strike_Reiuji;
+import ReiujiMod.cards.Reiuji.*;
 import ReiujiMod.characters.Reiuji;
 import ReiujiMod.powers.InvisibleHasUsedSpellPower;
 import ReiujiMod.relics.EyeOfYatagarasu;
+import ReiujiMod.variable.HeatVariable;
+import ReiujiMod.variable.TempHPVariable;
 import basemod.BaseMod;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
@@ -138,17 +138,17 @@ public class ReiujiMod implements PostExhaustSubscriber,
 		);
 	}
 
-	public static AbstractCard upgraded(AbstractCard card, boolean flag) {
-		if (flag)
-			card.upgrade();
-		return card;
-	}
-
-	public static AbstractReiujiCard upgraded(AbstractReiujiCard card, boolean flag) {
-		if (flag)
-			card.upgrade();
-		return card;
-	}
+//	public static AbstractCard upgraded(AbstractCard card, boolean flag) {
+//		if (flag)
+//			card.upgrade();
+//		return card;
+//	}
+//
+//	public static AbstractReiujiCard upgraded(AbstractReiujiCard card, boolean flag) {
+//		if (flag)
+//			card.upgrade();
+//		return card;
+//	}
 	
 	public void receiveEditCharacters() {
 		logger.info("begin editing characters");
@@ -174,11 +174,13 @@ public class ReiujiMod implements PostExhaustSubscriber,
 	}
 	
 	public void receiveEditCards() {
+		this.loadVariables();
+		
 		logger.info("starting editing cards");
 		
 		loadCardsToAdd();
 		
-		logger.info("adding cards for CIRNO");
+		logger.info("adding cards for REIUJI");
 		
 		for (AbstractCard card : cardsToAdd) {
 			logger.info("Adding card : " + card.name);
@@ -189,8 +191,6 @@ public class ReiujiMod implements PostExhaustSubscriber,
 		
 		logger.info("done editing cards");
 	}
-
-	public static CardGroup echoGroup;
 	
 	// 必须有这个函数才能初始化
 	public static void initialize() {
@@ -339,10 +339,54 @@ public class ReiujiMod implements PostExhaustSubscriber,
 	private void loadCardsToAdd() {
 		cardsToAdd.clear();
 		
-		cardsToAdd.add(new Strike_Reiuji());
+		cardsToAdd.add(new AbsoluteDomain());
+		cardsToAdd.add(new AdaptiveDefense());
+		cardsToAdd.add(new AnnihilationTheory());
+		cardsToAdd.add(new ChargeUp());
+		cardsToAdd.add(new DarkGrasp());
 		cardsToAdd.add(new Defend_Reiuji());
-
+		cardsToAdd.add(new Enchant());
+		cardsToAdd.add(new EnterTheVoid());
+		cardsToAdd.add(new EscapeTheVoid());
+		cardsToAdd.add(new FlameStorm());
+		cardsToAdd.add(new FusionReactor());
+		cardsToAdd.add(new HellFire());
+		cardsToAdd.add(new HellsArtificialSun());
+		cardsToAdd.add(new HoldYourHorses());
+		cardsToAdd.add(new Ignite());
 		cardsToAdd.add(new InstantCharge());
+		cardsToAdd.add(new IronDefense());
+		cardsToAdd.add(new NuclearRay());
+		cardsToAdd.add(new NuclearRupture());
+		cardsToAdd.add(new RadiantBlade());
+		cardsToAdd.add(new Reorganize());
+		cardsToAdd.add(new RetroAtomicModel());
+		cardsToAdd.add(new RocketStrike());
+		cardsToAdd.add(new ScatterSparks());
+		cardsToAdd.add(new SecondCircuit());
+		cardsToAdd.add(new SeeEyeToEye());
+		cardsToAdd.add(new Septentrion());
+		cardsToAdd.add(new ShieldOverWhelm());
+		cardsToAdd.add(new ShootingStar());
+		cardsToAdd.add(new SolarWind());
+		cardsToAdd.add(new Strike_Reiuji());
+		cardsToAdd.add(new TheSunStealer());
+		cardsToAdd.add(new UniverseSingsToMe());
+		cardsToAdd.add(new UpThrust());
+		cardsToAdd.add(new UtsuhosUnstableElement());
+		cardsToAdd.add(new VengefulNuclearSpirits());
+		cardsToAdd.add(new VoidFire());
+		cardsToAdd.add(new VoidGate());
+		cardsToAdd.add(new VoidStrike());
+		cardsToAdd.add(new VoidWalking());
+		cardsToAdd.add(new WardrobeMalfunction());
+		cardsToAdd.add(new YatagarasuDive());
+		
+	}
+	
+	private void loadVariables() {
+		BaseMod.addDynamicVariable(new HeatVariable());
+		BaseMod.addDynamicVariable(new TempHPVariable());
 	}
 	
 	
@@ -360,6 +404,8 @@ public class ReiujiMod implements PostExhaustSubscriber,
 		for (AbstractGameAction act : temp)
 			AbstractDungeon.actionManager.addToTop(act);
 	}
+	
+	public static CardGroup echoTempGroup;
 	
 //	public static AbstractCard getRandomReiujiCard() {
 //		return AbstractDungeon.returnTrulyRandomCardInCombat().makeCopy();

@@ -3,6 +3,8 @@ package ReiujiMod.powers;
 import ReiujiMod.ReiujiMod;
 import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -12,8 +14,8 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class CantDealDamageToPlayerPower extends AbstractPower {
-	public static final String SIMPLE_NAME = CantDealDamageToPlayerPower.class.getSimpleName();
+public class VengefulNuclearSpiritsOnMonsterPower extends AbstractPower implements InvisiblePower {
+	public static final String SIMPLE_NAME = VengefulNuclearSpiritsOnMonsterPower.class.getSimpleName();
 
 	public static final String POWER_ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/powers/" + SIMPLE_NAME + ".png";
@@ -23,7 +25,7 @@ public class CantDealDamageToPlayerPower extends AbstractPower {
 	public static final String[] DESCRIPTIONS =
 			powerStrings.DESCRIPTIONS;
 
-	public CantDealDamageToPlayerPower(AbstractMonster owner, int amount) {
+	public VengefulNuclearSpiritsOnMonsterPower(AbstractMonster owner, int amount) {
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = owner;
@@ -41,25 +43,12 @@ public class CantDealDamageToPlayerPower extends AbstractPower {
 	}
 
 	@Override
-	public float atDamageFinalGive(float damage, DamageInfo.DamageType type) {
-		if (type != DamageInfo.DamageType.THORNS &&
-				type != DamageInfo.DamageType.HP_LOSS)
-			return 0;
-
-		return damage;
-	}
-
-	@Override
-	public void atEndOfTurn(boolean isPlayer) {
-		if (!isPlayer) {
-			if (this.amount == 1)
-				this.addToBot(new RemoveSpecificPowerAction(
-						this.owner, this.owner,
-						CantDealDamageToPlayerPower.POWER_ID));
-			else
-				this.addToBot(new ReducePowerAction(
-						this.owner, this.owner,
-						CantDealDamageToPlayerPower.POWER_ID, 1));
-		}
+	public void atEndOfRound() {
+		this.addToBot(new DamageAction(
+				this.owner, new DamageInfo(AbstractDungeon.player, this.amount,
+				DamageInfo.DamageType.THORNS), AbstractGameAction.AttackEffect.LIGHTNING));
+		
+		this.addToBot(new RemoveSpecificPowerAction(
+				this.owner, this.owner, this));
 	}
 }

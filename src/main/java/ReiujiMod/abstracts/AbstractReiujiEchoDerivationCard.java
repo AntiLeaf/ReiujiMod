@@ -2,6 +2,7 @@ package ReiujiMod.abstracts;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
+@Deprecated
 public abstract class AbstractReiujiEchoDerivationCard extends AbstractReiujiEchoCard {
 	AbstractReiujiEchoCard original;
 

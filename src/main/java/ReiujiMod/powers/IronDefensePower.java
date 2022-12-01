@@ -1,17 +1,19 @@
 package ReiujiMod.powers;
 
 import ReiujiMod.ReiujiMod;
-import ReiujiMod.action.AddEmbraceAction;
-import ReiujiMod.embrace.EmbraceManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
+import com.evacipated.cardcrawl.mod.stslib.powers.abstracts.TwoAmountPower;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class EnterTheVoidPower extends AbstractPower {
-	public static final String SIMPLE_NAME = EnterTheVoidPower.class.getSimpleName();
+public class IronDefensePower extends AbstractPower {
+	public static final String SIMPLE_NAME = IronDefensePower.class.getSimpleName();
 
 	public static final String POWER_ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/powers/" + SIMPLE_NAME + ".png";
@@ -21,7 +23,7 @@ public class EnterTheVoidPower extends AbstractPower {
 	public static final String[] DESCRIPTIONS =
 			powerStrings.DESCRIPTIONS;
 
-	public EnterTheVoidPower(int amount) {
+	public IronDefensePower(int amount) {
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = AbstractDungeon.player;
@@ -31,15 +33,24 @@ public class EnterTheVoidPower extends AbstractPower {
 		this.updateDescription();
 		this.img = new Texture(IMG_PATH);
 	}
-
-	@Override
-	public void onCardDraw(AbstractCard card) {
-		this.addToTop(new AddEmbraceAction(card, this.amount));
-	}
 	
 	@Override
 	public void updateDescription() {
 //		this.description = (DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1]);
 		// TODO
+	}
+	
+	@Override
+	public void onGainedBlock(float amt) {
+		this.addToBot(new AddTemporaryHPAction(this.owner, this.owner,
+				this.amount * (int) amt));
+	}
+
+	@Override
+	public void atEndOfTurn(boolean isPlayer) {
+		if (isPlayer) {
+			this.addToBot(new RemoveSpecificPowerAction(
+					AbstractDungeon.player, AbstractDungeon.player, this));
+		}
 	}
 }

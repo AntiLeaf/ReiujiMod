@@ -1,7 +1,9 @@
 package ReiujiMod.cards.Reiuji;
 
+import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.action.ReiujiExhaustSpecificCardAction;
+import ReiujiMod.cards.ReiuijiDerivation.BlackHole;
 import ReiujiMod.patches.enums.AbstractCardEnum;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -16,9 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SolarWind extends AbstractReiujiCard {
-
-	public static final String ID = SolarWind.class.getSimpleName();
-	public static final String IMG_PATH = "img/cards/" + ID + ".png";
+	public static final String SIMPLE_NAME = SolarWind.class.getSimpleName();
+	
+	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
+	public static final String IMG_PATH = "img/cards/" + SIMPLE_NAME + ".png";
 	private static final CardStrings cardStrings =
 			CardCrawlGame.languagePack.getCardStrings(ID);
 	public static final String NAME = cardStrings.NAME;

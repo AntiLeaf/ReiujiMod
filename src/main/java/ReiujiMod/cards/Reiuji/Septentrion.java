@@ -1,5 +1,6 @@
 package ReiujiMod.cards.Reiuji;
 
+import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
 import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.powers.SeptentrionPower;
@@ -12,9 +13,10 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class Septentrion extends AbstractReiujiCard {
-
-	public static final String ID = Septentrion.class.getSimpleName();
-	public static final String IMG_PATH = "img/cards/" + ID + ".png";
+	public static final String SIMPLE_NAME = Septentrion.class.getSimpleName();
+	
+	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
+	public static final String IMG_PATH = "img/cards/" + SIMPLE_NAME + ".png";
 	private static final CardStrings cardStrings =
 			CardCrawlGame.languagePack.getCardStrings(ID);
 	public static final String NAME = cardStrings.NAME;

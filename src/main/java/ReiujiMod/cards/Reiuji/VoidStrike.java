@@ -2,6 +2,7 @@ package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
+import ReiujiMod.action.AddEmbraceAction;
 import ReiujiMod.action.AnonymousAction;
 import ReiujiMod.embrace.EmbraceManager;
 import ReiujiMod.patches.enums.AbstractCardEnum;
@@ -60,9 +61,7 @@ public class VoidStrike extends AbstractReiujiCard {
 		this.addToBot(new DamageAction(m,
 				new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL)));
 
-		this.addToBot(new AnonymousAction(() -> {
-			EmbraceManager.addEmbrace(this, this.magicNumber);
-		}));
+		this.addToBot(new AddEmbraceAction(this, this.magicNumber));
 	}
 	
 	@Override

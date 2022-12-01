@@ -40,6 +40,8 @@ public class RedGiantStar extends AbstractReiujiCard {
 		this.magicNumber = this.baseMagicNumber = ENERGY;
 		this.cantBePlayed = true;
 		this.isSupplement = true;
+		
+		this.cardsToPreview = new Supernova();
 	}
 
 	public void use(AbstractPlayer p, AbstractMonster m) {

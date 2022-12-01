@@ -43,6 +43,8 @@ public class Supernova extends AbstractReiujiCard {
 		this.damageType = this.damageTypeForTurn = DamageInfo.DamageType.THORNS;
 		this.cantBePlayed = true;
 		this.isSupplement = true;
+		
+		this.cardsToPreview = new BlackHole();
 	}
 
 	public void use(AbstractPlayer p, AbstractMonster m) {

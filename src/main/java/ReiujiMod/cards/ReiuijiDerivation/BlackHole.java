@@ -2,6 +2,7 @@ package ReiujiMod.cards.ReiuijiDerivation;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
+import ReiujiMod.cards.Reiuji.AbsoluteDomain;
 import ReiujiMod.cards.Reiuji.UniverseSingsToMe;
 import ReiujiMod.patches.enums.AbstractCardEnum;
 import basemod.BaseMod;
@@ -18,9 +19,10 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import org.apache.logging.log4j.Level;
 
 public class BlackHole extends AbstractReiujiCard {
-
-	public static final String ID = BlackHole.class.getSimpleName();
-	public static final String IMG_PATH = "img/cards/" + ID + ".png";
+	public static final String SIMPLE_NAME = BlackHole.class.getSimpleName();
+	
+	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
+	public static final String IMG_PATH = "img/cards/" + SIMPLE_NAME + ".png";
 	private static final CardStrings cardStrings =
 			CardCrawlGame.languagePack.getCardStrings(ID);
 	public static final String NAME = cardStrings.NAME;
@@ -45,7 +47,7 @@ public class BlackHole extends AbstractReiujiCard {
 		this.cantBePlayed = true;
 		this.isSupplement = true;
 
-		this.cardsToPreview = new MolecularCloud();
+//		this.cardsToPreview = new MolecularCloud();
 	}
 
 	public void use(AbstractPlayer p, AbstractMonster m) {
@@ -141,7 +143,7 @@ public class BlackHole extends AbstractReiujiCard {
 			this.upgradeName();
 			this.initializeDescription();
 
-			this.cardsToPreview.upgrade();
+//			this.cardsToPreview.upgrade();
 		}
 	}
 }

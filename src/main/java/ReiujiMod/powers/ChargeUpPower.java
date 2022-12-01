@@ -2,16 +2,18 @@ package ReiujiMod.powers;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.action.AddEmbraceAction;
-import ReiujiMod.embrace.EmbraceManager;
+import basemod.BaseMod;
 import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class EnterTheVoidPower extends AbstractPower {
-	public static final String SIMPLE_NAME = EnterTheVoidPower.class.getSimpleName();
+public class ChargeUpPower extends AbstractPower {
+	public static final String SIMPLE_NAME = ChargeUpPower.class.getSimpleName();
 
 	public static final String POWER_ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/powers/" + SIMPLE_NAME + ".png";
@@ -21,7 +23,7 @@ public class EnterTheVoidPower extends AbstractPower {
 	public static final String[] DESCRIPTIONS =
 			powerStrings.DESCRIPTIONS;
 
-	public EnterTheVoidPower(int amount) {
+	public ChargeUpPower(int amount) {
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = AbstractDungeon.player;
@@ -31,10 +33,20 @@ public class EnterTheVoidPower extends AbstractPower {
 		this.updateDescription();
 		this.img = new Texture(IMG_PATH);
 	}
-
+	
 	@Override
-	public void onCardDraw(AbstractCard card) {
-		this.addToTop(new AddEmbraceAction(card, this.amount));
+	public void onDrawOrDiscard() {
+		if (this.amount > BaseMod.MAX_HAND_SIZE)
+			return;
+		
+		if (AbstractDungeon.player.hand.size() < this.amount)
+			this.addToTop(new DrawCardAction(this.amount - AbstractDungeon.player.hand.size()));
+	}
+	
+	@Override
+	public void atEndOfTurn(boolean isPlayer) {
+		if (isPlayer)
+			this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
 	}
 	
 	@Override

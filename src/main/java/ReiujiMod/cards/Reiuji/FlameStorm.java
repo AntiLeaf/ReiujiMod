@@ -14,7 +14,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class FlameStorm extends AbstractReiujiCard {
 	
-	
 	public static final String SIMPLE_NAME = FlameStorm.class.getSimpleName();
 	
 	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;

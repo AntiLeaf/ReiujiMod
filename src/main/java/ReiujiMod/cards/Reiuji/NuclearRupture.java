@@ -68,6 +68,8 @@ public class NuclearRupture extends AbstractReiujiCard {
 		if (!this.upgraded) {
 			this.upgradeName();
 			this.upgradeBaseCost(UPG_COST);
+			this.draw += UPG_DRAW;
+			this.baseDraw += UPG_DRAW;
 			this.initializeDescription();
 		}
 	}

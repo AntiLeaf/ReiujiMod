@@ -1,8 +1,11 @@
-package ReiujiMod.cards.ReiuijiDerivation;
+package ReiujiMod.cards.Reiuji;
 
+import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
+import ReiujiMod.embrace.EmbraceManager;
 import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.powers.CantUseAttackPower;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -12,19 +15,20 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class ConsecutiveAttack4 extends AbstractReiujiCard {
+public class AnnihilationTheory extends AbstractReiujiCard {
+	public static final String SIMPLE_NAME = AnnihilationTheory.class.getSimpleName();
 
-	public static final String ID = ConsecutiveAttack4.class.getSimpleName();
+	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/cards/" + ID + ".png";
 	private static final CardStrings cardStrings =
 			CardCrawlGame.languagePack.getCardStrings(ID);
 	public static final String NAME = cardStrings.NAME;
 	public static final String DESCRIPTION = cardStrings.DESCRIPTION;
-	private static final int COST = 2;
-	private static final int DAMAGE = 17;
-	private static final int UPG_DAMAGE = 5;
 
-	public ConsecutiveAttack4() {
+	private static final int COST = 6;
+	private static final int DAMAGE = 6;
+
+	public AnnihilationTheory() {
 		super(
 			ID,
 			NAME,
@@ -32,31 +36,39 @@ public class ConsecutiveAttack4 extends AbstractReiujiCard {
 			COST,
 			DESCRIPTION,
 			CardType.ATTACK,
-			AbstractCardEnum.REIUJI_DERIVATION_COLOR,
-			CardRarity.SPECIAL,
+			AbstractCardEnum.REIUJI_COLOR,
+			CardRarity.RARE,
 			CardTarget.ENEMY
 		);
-		
+
 		this.damage = this.baseDamage = DAMAGE;
-//		this.comboInit();
 	}
-
+	
 	public void use(AbstractPlayer p, AbstractMonster m) {
-		this.addToBot(new DamageAction(m, new DamageInfo(p,
-				this.damage, this.damageTypeForTurn)));
-
-		this.addToBot(new ApplyPowerAction(p, p, new CantUseAttackPower()));
+		int cnt = 1 + EmbraceManager.getEmbrace(this);
+		for (int i = 0; i < cnt; i++)
+			this.addToBot(new DamageAction(m,
+					new DamageInfo(p, this.damage, this.damageTypeForTurn),
+					AbstractGameAction.AttackEffect.SLASH_HEAVY));
+	}
+	
+	@Override
+	public boolean removeEmbraceAfterPlayed() {
+		return false;
+	}
+	
+	public boolean canHaveInfinityEmbrace() {
+		return this.upgraded;
 	}
 	
 	@Override
 	public AbstractCard makeCopy() {
-		return new ConsecutiveAttack4();
+		return new AnnihilationTheory();
 	}
 	
 	public void upgrade() {
 		if (!this.upgraded) {
 			this.upgradeName();
-			this.upgradeDamage(UPG_DAMAGE);
 			this.initializeDescription();
 		}
 	}

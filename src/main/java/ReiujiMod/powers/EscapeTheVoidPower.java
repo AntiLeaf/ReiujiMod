@@ -1,17 +1,19 @@
 package ReiujiMod.powers;
 
 import ReiujiMod.ReiujiMod;
-import ReiujiMod.action.AddEmbraceAction;
-import ReiujiMod.embrace.EmbraceManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.status.VoidCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class EnterTheVoidPower extends AbstractPower {
-	public static final String SIMPLE_NAME = EnterTheVoidPower.class.getSimpleName();
+public class EscapeTheVoidPower extends AbstractPower {
+	public static final String SIMPLE_NAME = EscapeTheVoidPower.class.getSimpleName();
 
 	public static final String POWER_ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/powers/" + SIMPLE_NAME + ".png";
@@ -21,7 +23,7 @@ public class EnterTheVoidPower extends AbstractPower {
 	public static final String[] DESCRIPTIONS =
 			powerStrings.DESCRIPTIONS;
 
-	public EnterTheVoidPower(int amount) {
+	public EscapeTheVoidPower(int amount) {
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = AbstractDungeon.player;
@@ -34,7 +36,8 @@ public class EnterTheVoidPower extends AbstractPower {
 
 	@Override
 	public void onCardDraw(AbstractCard card) {
-		this.addToTop(new AddEmbraceAction(card, this.amount));
+		if (card instanceof VoidCard)
+			this.addToBot(new DrawCardAction(this.amount));
 	}
 	
 	@Override

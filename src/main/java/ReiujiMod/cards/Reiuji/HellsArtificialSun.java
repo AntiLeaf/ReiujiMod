@@ -2,7 +2,10 @@ package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
+import ReiujiMod.abstracts.AbstractReiujiEchoCard;
+import ReiujiMod.embrace.EmbraceManager;
 import ReiujiMod.patches.enums.AbstractCardEnum;
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
@@ -15,7 +18,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class HellsArtificialSun extends AbstractReiujiCard {
+public class HellsArtificialSun extends AbstractReiujiEchoCard {
 	public static final String SIMPLE_NAME = HellsArtificialSun.class.getSimpleName();
 
 	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
@@ -42,8 +45,32 @@ public class HellsArtificialSun extends AbstractReiujiCard {
 		);
 
 		this.damage = this.baseDamage = DAMAGE;
+		this.exhaust = true;
 		this.isSpellCard = true;
-		this.returnToHand = true;
+	}
+	
+	public HellsArtificialSun(HellsArtificialSun original) {
+		super(original);
+	}
+	
+	public void initAsDerivation() {
+		if (this.original == null) {
+			ReiujiMod.logger.warn("Original card is null!");
+			return;
+		}
+		
+		super.initAsDerivation();
+		
+		this.cost = COST;
+		this.damage = this.baseDamage = DAMAGE;
+		this.isSpellCard = true;
+		
+		for (int i = 0; i < this.original.timesUpgraded; i++)
+			this.upgrade();
+	}
+	
+	public AbstractReiujiEchoCard makeDerivation() {
+		return new HellsArtificialSun(this);
 	}
 	
 	public void use(AbstractPlayer p, AbstractMonster m) {
@@ -52,22 +79,6 @@ public class HellsArtificialSun extends AbstractReiujiCard {
 		this.addToBot(new ExhaustAction(1, !this.upgraded, false));
 		this.addToBot(new DamageAllEnemiesAction(p, this.multiDamage,
 				this.damageTypeForTurn, AbstractGameAction.AttackEffect.FIRE));
-
-		this.isEthereal = true;
-	}
-
-	@Override
-	public void triggerOnGlowCheck() {
-		if (this.isEthereal)
-			this.glowColor = Color.GREEN;
-		else
-			super.triggerOnGlowCheck();
-	}
-
-	@Override
-	public void triggerOnManualDiscard() {
-		this.addToTop(new ExhaustSpecificCardAction(
-				this, AbstractDungeon.player.hand));
 	}
 	
 	@Override

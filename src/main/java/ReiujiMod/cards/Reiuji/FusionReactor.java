@@ -1,6 +1,8 @@
 package ReiujiMod.cards.Reiuji;
 
+import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
+import ReiujiMod.cards.ReiuijiDerivation.BlackHole;
 import ReiujiMod.cards.ReiuijiDerivation.Spark;
 import ReiujiMod.patches.enums.AbstractCardEnum;
 import ReiujiMod.powers.EnchantPower;
@@ -13,9 +15,10 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class FusionReactor extends AbstractReiujiCard {
-
-	public static final String ID = FusionReactor.class.getSimpleName();
-	public static final String IMG_PATH = "img/cards/" + ID + ".png";
+	
+	public static final String SIMPLE_NAME = FusionReactor.class.getSimpleName();
+	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
+	public static final String IMG_PATH = "img/cards/" + SIMPLE_NAME + ".png";
 	private static final CardStrings cardStrings =
 			CardCrawlGame.languagePack.getCardStrings(ID);
 	public static final String NAME = cardStrings.NAME;
@@ -33,7 +36,7 @@ public class FusionReactor extends AbstractReiujiCard {
 			DESCRIPTION,
 			CardType.POWER,
 			AbstractCardEnum.REIUJI_COLOR,
-			CardRarity.COMMON,
+			CardRarity.UNCOMMON,
 			CardTarget.SELF
 		);
 

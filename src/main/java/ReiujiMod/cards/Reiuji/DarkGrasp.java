@@ -2,72 +2,61 @@ package ReiujiMod.cards.Reiuji;
 
 import ReiujiMod.ReiujiMod;
 import ReiujiMod.abstracts.AbstractReiujiCard;
+import ReiujiMod.cards.ReiuijiDerivation.BlackHole;
 import ReiujiMod.patches.enums.AbstractCardEnum;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
+import ReiujiMod.powers.DarkGraspPower;
+import ReiujiMod.powers.FusionReactorPower;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class ScatterSparks extends AbstractReiujiCard {
-	public static final String SIMPLE_NAME = ScatterSparks.class.getSimpleName();
-
+public class DarkGrasp extends AbstractReiujiCard {
+	
+	public static final String SIMPLE_NAME = DarkGrasp.class.getSimpleName();
+	
 	public static final String ID = ReiujiMod.SIMPLE_NAME + ":" + SIMPLE_NAME;
-	public static final String IMG_PATH = "img/cards/" + ID + ".png";
+	public static final String IMG_PATH = "img/cards/" + SIMPLE_NAME + ".png";
 	private static final CardStrings cardStrings =
 			CardCrawlGame.languagePack.getCardStrings(ID);
 	public static final String NAME = cardStrings.NAME;
 	public static final String DESCRIPTION = cardStrings.DESCRIPTION;
-
 	private static final int COST = 1;
-	private static final int DAMAGE = 1;
-	private static final int TIMES = 10;
-	private static final int UPG_TIMES = 4;
+	private static final int UPG_COST = 0;
+	private static final int AMT = 1;
 
-	public ScatterSparks() {
+	public DarkGrasp() {
 		super(
 			ID,
 			NAME,
 			IMG_PATH,
 			COST,
 			DESCRIPTION,
-			CardType.ATTACK,
+			CardType.POWER,
 			AbstractCardEnum.REIUJI_COLOR,
 			CardRarity.UNCOMMON,
-			CardTarget.ENEMY
+			CardTarget.NONE
 		);
 
-		this.damage = this.baseDamage = DAMAGE;
-		this.magicNumber = this.baseMagicNumber = TIMES;
+		this.magicNumber = this.baseMagicNumber = AMT;
 	}
 	
 	public void use(AbstractPlayer p, AbstractMonster m) {
-		for (int i = 0; i < this.magicNumber; i++)
-			this.addToBot(new DamageAction(m,
-				new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL)));
-	}
-
-	@Override
-	public void applyPowers() {
-		// pass
-	}
-	
-	@Override
-	public void calculateCardDamage(AbstractMonster mo) {
-	
+		this.addToBot(new ApplyPowerAction(p, p,
+				new DarkGraspPower(this.magicNumber)));
 	}
 	
 	@Override
 	public AbstractCard makeCopy() {
-		return new ScatterSparks();
+		return new DarkGrasp();
 	}
 	
 	public void upgrade() {
 		if (!this.upgraded) {
 			this.upgradeName();
-			this.upgradeMagicNumber(UPG_TIMES);
+			this.upgradeBaseCost(UPG_COST);
 			this.initializeDescription();
 		}
 	}
